@@ -4,9 +4,9 @@ All four internship tasks, built with vanilla HTML5, CSS3 and JavaScript (ES6+).
 
 | # | Project | Level | Highlights |
 |---|---------|-------|------------|
-| 1 | [Developer Portfolio](Task1-Portfolio/) | Beginner | Mobile-first Flexbox/Grid layout, dark/light theme (saved), smooth scroll, hamburger menu, project modal popups, skill bars, form validation |
-| 2 | [Task Manager (CRUD)](Task2-Task-Manager/) | Beginner | Add/edit/delete, categories (Work/Personal/Study), due dates + overdue flag, All/Active/Completed filters, search, drag-and-drop reorder, `localStorage` persistence, completion animations |
-| 3 | [Weather Forecast App](Task3-Weather-App/) | Intermediate | `fetch` + `async/await` + `try/catch`, city search, icons, humidity/wind/pressure, 5-day forecast, loading spinner, invalid-city errors, dynamic gradient (sunny/rain/snow/storm/night), °C/°F |
+| 1 | [Developer Portfolio](Task1-Portfolio/) | Beginner | Bold creative design with illustrated SVG avatar, mobile-first Flexbox/Grid layout, dark/light theme (saved), smooth scroll, hamburger menu, project modal popups, skill badges, form validation |
+| 2 | [Task Manager (CRUD)](Task2-Task-Manager/) | Beginner | Dashboard layout with category sidebar, progress bars, efficiency rings, completed-tasks chart and upcoming-deadline plan. Add/edit/delete, categories (Work/Personal/Study), due dates + overdue flag, All/Active/Completed filters, search, drag-and-drop reorder, `localStorage` persistence, completion animations |
+| 3 | [Weather Forecast App](Task3-Weather-App/) | Intermediate | Widget dashboard: current weather, sunrise/sunset arc, hourly and 5-day forecast, precipitation, wind, humidity, pressure, UV index, air-quality gauge and alert banner. `fetch` + `async/await` + `try/catch`, loading spinner, invalid-city errors, weather- and night-based themes, °C/°F |
 | 4 | [E-Commerce Store](Task4-E-Commerce/) | Intermediate | FakeStoreAPI catalog, category filter, search, sort, slide-out cart with badge, quantity +/−, tax and shipping calculation, persistent cart, simulated checkout |
 
 ## Folder structure
