@@ -5,7 +5,7 @@
    Links marked with data-repo-path="<folder>" point to that folder in the repo;
    if no repo is known (e.g. when opened locally), those links are removed instead of being broken. */
 (function () {
-  const REPO_URL = "https://github.com/peershah624372/Datheon_Full_Stack_Web_Development_Internship";
+  const REPO_URL = "https://github.com/Peershah624372/Datheon_Full_Stack_Web_Development_Internship";
 
   let repo = REPO_URL;
   const pages = location.hostname.match(/^([a-z0-9-]+)\.github\.io$/i);

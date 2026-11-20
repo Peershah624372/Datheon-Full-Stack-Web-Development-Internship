@@ -61,7 +61,7 @@ Every project is a static, client-side app: one HTML file, one stylesheet and on
 ## Run locally
 
 ```bash
-git clone https://github.com/peershah624372/Datheon_Full_Stack_Web_Development_Internship.git
+git clone https://github.com/Peershah624372/Datheon_Full_Stack_Web_Development_Internship.git
 cd Datheon_Full_Stack_Web_Development_Internship
 
 # optional: use OpenWeatherMap locally (otherwise the weather app uses Open-Meteo)
