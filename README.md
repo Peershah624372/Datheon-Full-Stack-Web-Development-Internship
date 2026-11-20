@@ -35,6 +35,6 @@ Enable **GitHub Pages** (Settings → Pages → Deploy from branch → `main` / 
 
 ## Notes
 
-- **Weather app** uses [Open-Meteo](https://open-meteo.com/), a free REST weather API that needs no API key, so it works as soon as it is deployed and no secret is committed. It follows the same pattern as OpenWeatherMap (geocode, then fetch, then render).
+- **Weather app** uses the [OpenWeatherMap](https://openweathermap.org/api) free API (current weather + 5-day forecast). If the key is not yet active, it automatically falls back to [Open-Meteo](https://open-meteo.com/), which needs no key. Use only a free-tier key, since client-side keys are visible to anyone.
 - **Store** data comes from [FakeStoreAPI](https://fakestoreapi.com/products).
 - Personalise Task 1 by replacing "Your Name", the email, the social links and the project links.

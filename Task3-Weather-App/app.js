@@ -94,12 +94,73 @@ function render({ place, data }) {
   show("weather");
 }
 
+/* ---------- OpenWeatherMap (primary) ---------- */
+// NOTE: client-side keys are visible to anyone. Use a free-tier key only.
+const OWM_KEY = "";
+const OWM = "https://api.openweathermap.org/data/2.5";
+
+// Map OpenWeatherMap condition ids onto the WMO codes used by describe()
+function owmToWmo(id) {
+  if (id >= 200 && id < 300) return 95;
+  if (id >= 300 && id < 400) return 53;
+  if (id === 500) return 61; if (id === 501) return 63; if (id >= 502 && id < 520) return 65;
+  if (id >= 520 && id < 600) return 81;
+  if (id === 600) return 71; if (id >= 601 && id < 700) return 75;
+  if (id >= 700 && id < 800) return 45;
+  if (id === 800) return 0; if (id === 801) return 1; if (id === 802) return 2;
+  return 3;
+}
+
+async function owmFetch(path, query) {
+  let res;
+  try { res = await fetch(`${OWM}/${path}?${query}&units=metric&appid=${OWM_KEY}`); }
+  catch { throw new WeatherError("Network error. Please check your internet connection."); }
+  if (res.status === 404) throw new WeatherError("City not found. Check the spelling and try again.");
+  if (res.status === 401) throw new Error("OWM_KEY_INACTIVE");
+  if (!res.ok) throw new WeatherError(`Weather service error (${res.status}). Try again later.`);
+  return res.json();
+}
+
+// Fetch from OpenWeatherMap and convert to the shape render() expects
+async function getOWM(query) {
+  const [cur, fc] = await Promise.all([owmFetch("weather", query), owmFetch("forecast", query)]);
+  const isDay = cur.dt >= cur.sys.sunrise && cur.dt < cur.sys.sunset ? 1 : 0;
+  const byDay = {};
+  fc.list.forEach((e) => {
+    const day = new Date((e.dt + fc.city.timezone) * 1000).toISOString().slice(0, 10);
+    (byDay[day] ??= []).push(e);
+  });
+  const days = Object.keys(byDay).slice(0, 5);
+  return {
+    place: [cur.name, cur.sys.country].filter(Boolean).join(", "),
+    data: {
+      current: {
+        time: cur.dt * 1000, is_day: isDay, weather_code: owmToWmo(cur.weather[0].id),
+        temperature_2m: cur.main.temp, apparent_temperature: cur.main.feels_like,
+        relative_humidity_2m: cur.main.humidity, pressure_msl: cur.main.pressure,
+        wind_speed_10m: Math.round(cur.wind.speed * 3.6),
+      },
+      daily: {
+        time: days,
+        weather_code: days.map((d) => owmToWmo(byDay[d][Math.floor(byDay[d].length / 2)].weather[0].id)),
+        temperature_2m_max: days.map((d) => Math.max(...byDay[d].map((e) => e.main.temp_max))),
+        temperature_2m_min: days.map((d) => Math.min(...byDay[d].map((e) => e.main.temp_min))),
+      },
+    },
+  };
+}
+
 async function loadCity(city) {
   show("loader");
   try {
-    const geo = await geocode(city);
-    const data = await getWeather(geo);
-    last = { place: geo.label, data };
+    try {
+      last = await getOWM(`q=${encodeURIComponent(city)}`);
+    } catch (err) {
+      if (err.message !== "OWM_KEY_INACTIVE") throw err;
+      console.warn("OpenWeatherMap key not active yet, falling back to Open-Meteo");
+      const geo = await geocode(city);
+      last = { place: geo.label, data: await getWeather(geo) };
+    }
     render(last);
     try { localStorage.setItem("lastCity", city); } catch {}
   } catch (err) {
@@ -126,8 +187,11 @@ $("locate-btn").addEventListener("click", () => {
   navigator.geolocation.getCurrentPosition(
     async ({ coords }) => {
       try {
-        const data = await getWeather(coords);
-        last = { place: "Your location", data };
+        try { last = await getOWM(`lat=${coords.latitude}&lon=${coords.longitude}`); }
+        catch (err) {
+          if (err.message !== "OWM_KEY_INACTIVE") throw err;
+          last = { place: "Your location", data: await getWeather(coords) };
+        }
         render(last);
       } catch (err) { $("error").textContent = err.message; show("error"); }
     },
