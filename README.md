@@ -6,11 +6,11 @@ Four web projects built by **Peer Shah** for the Datheon Full Stack Web Developm
 
 | Project | GitHub Pages | Vercel |
 |---------|--------------|--------|
-| Landing page (all projects) | [Open](https://peershah624372.github.io/Datheon_Full_Stack_Web_Development_Internship/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/) |
-| Task 1 – Developer Portfolio | [Open](https://peershah624372.github.io/Datheon_Full_Stack_Web_Development_Internship/Task1-Portfolio/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/Task1-Portfolio/) |
-| Task 2 – Task Manager | [Open](https://peershah624372.github.io/Datheon_Full_Stack_Web_Development_Internship/Task2-Task-Manager/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/Task2-Task-Manager/) |
-| Task 3 – Weather App | [Open](https://peershah624372.github.io/Datheon_Full_Stack_Web_Development_Internship/Task3-Weather-App/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/Task3-Weather-App/) |
-| Task 4 – E-Commerce Store | [Open](https://peershah624372.github.io/Datheon_Full_Stack_Web_Development_Internship/Task4-E-Commerce/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/Task4-E-Commerce/) |
+| Landing page (all projects) | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/) |
+| Task 1 – Developer Portfolio | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/Task1-Portfolio/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/Task1-Portfolio/) |
+| Task 2 – Task Manager | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/Task2-Task-Manager/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/Task2-Task-Manager/) |
+| Task 3 – Weather App | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/Task3-Weather-App/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/Task3-Weather-App/) |
+| Task 4 – E-Commerce Store | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/Task4-E-Commerce/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/Task4-E-Commerce/) |
 
 > On **Vercel** the weather app uses OpenWeatherMap through a server-side proxy (the API key stays hidden). On **GitHub Pages**, which can't run server code, it uses Open-Meteo instead. Everything else is identical.
 
@@ -61,8 +61,8 @@ Every project is a static, client-side app: one HTML file, one stylesheet and on
 ## Run locally
 
 ```bash
-git clone https://github.com/Peershah624372/Datheon_Full_Stack_Web_Development_Internship.git
-cd Datheon_Full_Stack_Web_Development_Internship
+git clone https://github.com/Peershah624372/Datheon-Full-Stack-Web-Development-Internship.git
+cd Datheon-Full-Stack-Web-Development-Internship
 
 # optional: use OpenWeatherMap locally (otherwise the weather app uses Open-Meteo)
 cp Task3-Weather-App/config.example.js Task3-Weather-App/config.js   # then paste your key into config.js
@@ -78,7 +78,7 @@ Use a local server rather than opening the files directly: browsers block some `
 ### GitHub Pages
 1. Push this repository to GitHub as a **public** repo.
 2. **Settings → Pages → Build and deployment → Deploy from a branch**, branch `main`, folder `/ (root)`, then **Save**.
-3. After a minute the site is live at `https://peershah624372.github.io/Datheon_Full_Stack_Web_Development_Internship/`.
+3. After a minute the site is live at `https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/`.
 
 ### Vercel
 1. Sign in at [vercel.com](https://vercel.com) with GitHub → **Add New… → Project** → import this repository.
