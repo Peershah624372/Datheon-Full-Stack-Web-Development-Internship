@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>✅ Task Manager</h1>
+      <p id="summary" class="summary"></p>
+    </header>
+
+    <form id="task-form" class="task-form" novalidate>
+      <input type="text" id="task-input" placeholder="What needs to be done?" maxlength="120" required aria-label="Task title" />
+      <select id="category-input" aria-label="Category">
+        <option>Work</option><option>Personal</option><option>Study</option>
+      </select>
+      <input type="date" id="due-input" aria-label="Due date" />
+      <button type="submit" id="submit-btn">Add</button>
+    </form>
+    <p id="error" class="error" role="alert"></p>
+
+    <div class="toolbar">
+      <div class="filters" role="group" aria-label="Filter by status">
+        <button class="filter active" data-filter="all">All</button>
+        <button class="filter" data-filter="active">Active</button>
+        <button class="filter" data-filter="completed">Completed</button>
+      </div>
+      <select id="category-filter" aria-label="Filter by category">
+        <option value="all">All categories</option><option>Work</option><option>Personal</option><option>Study</option>
+      </select>
+      <input type="search" id="search" placeholder="Search tasks…" aria-label="Search tasks" />
+    </div>
+
+    <ul id="task-list" class="task-list"></ul>
+    <p id="empty" class="empty" hidden>No tasks here yet. Add one above! 🎉</p>
+
+    <footer>
+      <button id="clear-completed" class="link-btn">Clear completed</button>
+      <span class="hint">Tip: drag tasks to reorder</span>
+    </footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
