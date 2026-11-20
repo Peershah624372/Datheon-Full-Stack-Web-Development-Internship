@@ -4,42 +4,93 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Weather Forecast</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E⚡%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E⛅%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="theme-default" id="body">
-  <main class="app">
-    <h1>⛅ Weather Telemetry</h1>
-    <form id="search-form" class="search" role="search">
-      <input type="text" id="city-input" placeholder="Search any city (e.g. London, Tokyo)…" aria-label="City name" autocomplete="off" required />
-      <button type="submit">Search</button>
-      <button type="button" id="locate-btn" title="Use my location" aria-label="Use my location">📍</button>
-    </form>
-    <div class="units"><button id="unit-toggle" class="unit-btn">Switch to °F</button></div>
+<body class="theme-default">
+  <div class="sky" aria-hidden="true"><span class="cloud c1"></span><span class="cloud c2"></span><span class="cloud c3"></span></div>
 
+  <header class="top">
+    <h1>Weather App</h1>
+    <form id="search-form" class="search" role="search">
+      <span class="pin" aria-hidden="true">📍</span>
+      <input type="text" id="city-input" placeholder="Search any city…" aria-label="City name" autocomplete="off" required />
+      <button type="submit" class="go">Search</button>
+      <span class="live-tag" aria-hidden="true">LIVE</span>
+    </form>
+    <div class="top-actions">
+      <button type="button" id="locate-btn" class="round" title="Use my location" aria-label="Use my location">◎</button>
+      <button type="button" id="unit-toggle" class="pill">Switch to °F</button>
+    </div>
+  </header>
+
+  <main class="wrap">
     <div id="loader" class="loader" hidden><div class="spinner"></div><p>Fetching weather…</p></div>
     <div id="error" class="error" role="alert" hidden></div>
 
-    <section id="weather" hidden>
-      <div class="current">
-        <div>
-          <h2 id="place"></h2>
-          <p id="date" class="muted"></p>
-          <div class="temp-row"><span id="icon" class="big-icon"></span><span id="temp" class="temp"></span></div>
-          <p id="condition" class="condition"></p>
+    <section id="weather" class="dash" hidden aria-live="polite">
+      <!-- Current -->
+      <article class="card current">
+        <h2 class="card-head">Current weather <span class="badge-live">LIVE</span></h2>
+        <div class="current-body">
+          <div class="cur-left">
+            <p id="temp" class="temp"></p>
+            <p id="condition" class="condition"></p>
+            <p id="hilo" class="hilo"></p>
+            <p id="place" class="place"></p>
+            <p class="feels">Feels like <span id="feels"></span></p>
+            <p id="date" class="date"></p>
+          </div>
+          <span id="icon" class="big-icon"></span>
         </div>
-        <div class="metrics">
-          <div class="metric"><span>💧 Humidity</span><strong id="humidity"></strong></div>
-          <div class="metric"><span>💨 Wind</span><strong id="wind"></strong></div>
-          <div class="metric"><span>🧭 Pressure</span><strong id="pressure"></strong></div>
-          <div class="metric"><span>🌡️ Feels like</span><strong id="feels"></strong></div>
-        </div>
+        <span id="cond-tag" class="cond-tag"></span>
+      </article>
+
+      <div class="stack">
+        <!-- Sunrise / sunset -->
+        <article class="card sun">
+          <h2 class="card-head">Sunrise / Sunset</h2>
+          <div class="sun-body">
+            <div class="sun-col"><span class="sun-ico" aria-hidden="true">🌅</span><strong id="sunrise"></strong><small>Sunrise</small></div>
+            <div class="sun-arc" id="sun-arc"></div>
+            <div class="sun-col"><span class="sun-ico" aria-hidden="true">🌇</span><strong id="sunset"></strong><small>Sunset</small></div>
+          </div>
+        </article>
+        <!-- Hourly -->
+        <article class="card hourly">
+          <h2 class="card-head">Hourly forecast</h2>
+          <div id="hourly" class="hourly-row" tabindex="0" role="region" aria-label="Hourly forecast, scrollable"></div>
+        </article>
       </div>
-      <h3 class="forecast-title">5-Day Forecast</h3>
-      <div id="forecast" class="forecast"></div>
+
+      <!-- 5-day -->
+      <article class="card week">
+        <h2 class="week-title">5-Day Forecast <small>tap a day</small></h2>
+        <div id="forecast" class="forecast"></div>
+      </article>
+
+      <!-- Widgets -->
+      <div class="widgets">
+        <article class="card mini"><h2>Precipitation</h2><div class="mini-row"><span class="mi" aria-hidden="true">🌧️</span><strong id="precip"></strong></div><small id="precip-sub"></small></article>
+        <article class="card mini"><h2>Wind speed</h2><div class="mini-row"><span class="mi" aria-hidden="true">💨</span><strong id="wind"></strong></div><small>at 10 m height</small></article>
+        <article class="card mini"><h2>Humidity</h2><div class="mini-row"><span class="mi" aria-hidden="true">💧</span><strong id="humidity"></strong></div><small>relative humidity</small></article>
+        <article class="card mini"><h2>Pressure</h2><div class="mini-row"><span class="mi" aria-hidden="true">🧭</span><strong id="pressure"></strong></div><small>sea level</small></article>
+        <article class="card mini"><h2>UV index</h2><div class="mini-row"><span class="mi sunny" aria-hidden="true">☀️</span><strong id="uv"></strong></div><small id="uv-label"></small></article>
+        <article class="card air">
+          <h2 class="card-head">Air quality</h2>
+          <div id="aqi-gauge" class="gauge"></div>
+          <strong id="aqi-label"></strong>
+          <small id="aqi-detail"></small>
+        </article>
+        <div id="alert" class="alert" role="status"></div>
+      </div>
     </section>
   </main>
-  <footer class="credit">Data: <a href="https://openweathermap.org/" target="_blank" rel="noopener">OpenWeatherMap</a> (fallback: Open-Meteo)</footer>
+
+  <footer class="credit">Data: <a href="https://openweathermap.org/" target="_blank" rel="noopener">OpenWeatherMap</a> · UV &amp; fallback: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a></footer>
   <script src="app.js"></script>
 </body>
 </html>

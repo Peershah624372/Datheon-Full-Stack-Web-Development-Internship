@@ -1,10 +1,10 @@
 "use strict";
 
 const projects = [
-  { emoji: "🌐", title: "Portfolio Website", desc: "Responsive developer portfolio with dark/light theme, smooth scrolling and modal project showcase.", tags: ["HTML5", "CSS3", "JavaScript"], live: "#", code: "#" },
-  { emoji: "✅", title: "Task Manager", desc: "CRUD task app with categories, due dates, filters, drag-and-drop and localStorage persistence.", tags: ["JavaScript", "localStorage", "DOM"], live: "../Task2-Task-Manager/index.html", code: "../Task2-Task-Manager" },
-  { emoji: "⛅", title: "Weather Dashboard", desc: "Live weather and 5-day forecast with dynamic backgrounds, icons and graceful error handling.", tags: ["Fetch API", "Async/Await", "REST"], live: "../Task3-Weather-App/index.html", code: "../Task3-Weather-App" },
-  { emoji: "🛒", title: "E-Commerce Store", desc: "Product catalog from FakeStoreAPI with filters, search, slide-out cart and simulated checkout.", tags: ["JavaScript", "CSS Grid", "State"], live: "../Task4-E-Commerce/index.html", code: "../Task4-E-Commerce" },
+  { emoji: "🌐", type: "Web Design", grad: "linear-gradient(135deg,#ffd93d,#ff8a00)", title: "Portfolio Website", desc: "Responsive developer portfolio with dark/light theme, smooth scrolling and modal project showcase.", tags: ["HTML5", "CSS3", "JavaScript"], live: "#", code: "#" },
+  { emoji: "✅", type: "Productivity App", grad: "linear-gradient(135deg,#7c3aed,#2563eb)", title: "Task Manager", desc: "CRUD task app with categories, due dates, filters, drag-and-drop, a progress dashboard and localStorage persistence.", tags: ["JavaScript", "localStorage", "DOM"], live: "../Task2-Task-Manager/index.html", code: "../Task2-Task-Manager" },
+  { emoji: "⛅", type: "API Dashboard", grad: "linear-gradient(135deg,#38bdf8,#6366f1)", title: "Weather Dashboard", desc: "Live weather, hourly and 5-day forecast, sunrise/sunset, air quality and UV with dynamic themes and error handling.", tags: ["Fetch API", "Async/Await", "REST"], live: "../Task3-Weather-App/index.html", code: "../Task3-Weather-App" },
+  { emoji: "🛒", type: "E-Commerce", grad: "linear-gradient(135deg,#fb923c,#e11d48)", title: "E-Commerce Store", desc: "Product catalog from FakeStoreAPI with filters, search, slide-out cart and simulated checkout.", tags: ["JavaScript", "CSS Grid", "State"], live: "../Task4-E-Commerce/index.html", code: "../Task4-E-Commerce" },
 ];
 
 const $ = (s) => document.querySelector(s);
@@ -19,7 +19,7 @@ function setTheme(t) {
 }
 let saved = null;
 try { saved = localStorage.getItem("theme"); } catch {}
-setTheme(saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+setTheme(saved || "dark");
 themeBtn.addEventListener("click", () => setTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark"));
 
 /* ---------- Mobile menu ---------- */
@@ -50,7 +50,8 @@ const grid = $("#projects-grid");
 projects.forEach((p, i) => {
   const b = document.createElement("button");
   b.className = "card reveal";
-  b.innerHTML = `<div class="emoji">${p.emoji}</div><h3>${p.title}</h3><p>${p.desc}</p>
+  b.innerHTML = `<div class="thumb" style="background:${p.grad}"><span aria-hidden="true">${p.emoji}</span></div>
+    <div class="info"><div><h3>${p.title}</h3><small>${p.type}</small></div><span class="arrow" aria-hidden="true">↗</span></div>
     <div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div>`;
   b.addEventListener("click", () => openModal(i));
   grid.appendChild(b);

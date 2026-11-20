@@ -6,45 +6,110 @@
   <meta name="description" content="Personal developer portfolio – projects, skills and contact." />
   <title>Developer Portfolio</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E⚡%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header class="header" id="header">
     <nav class="nav container" aria-label="Main navigation">
-      <a href="#home" class="logo">&lt;Dev/&gt;</a>
+      <a href="#home" class="logo">Your Name<span>.</span></a>
       <ul class="nav-links" id="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
+        <li><a href="#home">Home</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
       <div class="nav-actions">
-        <button id="theme-toggle" class="icon-btn" aria-label="Toggle dark / light theme">🌙</button>
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle dark / light theme">☀️</button>
         <button id="hamburger" class="icon-btn hamburger" aria-label="Open menu" aria-expanded="false">☰</button>
       </div>
     </nav>
   </header>
 
   <main>
+    <!-- HERO -->
     <section id="home" class="hero">
-      <div class="container hero-inner">
-        <p class="eyebrow">Hello, I'm</p>
-        <h1>Your Name<span class="accent">.</span></h1>
-        <p class="typed">Full Stack Web Developer · <span id="typed-text"></span><span class="cursor">|</span></p>
-        <p class="lead">I build fast, accessible and responsive web applications with modern JavaScript.</p>
-        <div class="hero-cta">
-          <a href="#projects" class="btn btn-primary">View My Work</a>
-          <a href="resume.html" class="btn btn-outline" target="_blank" rel="noopener">Resume</a>
+      <span class="blob b1" aria-hidden="true"></span>
+      <span class="blob b2" aria-hidden="true"></span>
+      <span class="blob b3" aria-hidden="true"></span>
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <p class="hey">Hey,</p>
+          <h1><span class="im">I'm</span> Your&nbsp;Name</h1>
+          <p class="roles">Full Stack Developer <i>•</i> Frontend <i>•</i> Problem Solver</p>
+          <p class="typed"><span id="typed-text"></span><span class="cursor" aria-hidden="true">|</span></p>
+          <div class="hero-cta">
+            <a href="#projects" class="btn btn-lime"><span aria-hidden="true">▶</span> View Projects</a>
+            <a href="resume.html" class="btn btn-outline" target="_blank" rel="noopener">Resume <span aria-hidden="true">↗</span></a>
+          </div>
+          <p class="scroll-hint"><span class="mouse" aria-hidden="true"></span> Scroll down</p>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+          <div class="bubble">Let's build something awesome!</div>
+          <svg class="avatar-svg" viewBox="0 0 320 360" role="img" focusable="false">
+            <path d="M30 360 C30 268 90 236 160 236 C230 236 290 268 290 360Z" fill="#7c3aed" stroke="#0b0b10" stroke-width="5"/>
+            <path d="M112 242 Q160 304 208 242 Z" fill="#5b21b6" stroke="#0b0b10" stroke-width="5" stroke-linejoin="round"/>
+            <path d="M138 300 L134 352 M182 300 L186 352" stroke="#c6f432" stroke-width="4" stroke-linecap="round"/>
+            <rect x="140" y="208" width="40" height="44" rx="16" fill="#f1b788" stroke="#0b0b10" stroke-width="5"/>
+            <ellipse cx="160" cy="150" rx="70" ry="76" fill="#ffd2a8" stroke="#0b0b10" stroke-width="5"/>
+            <ellipse cx="90" cy="158" rx="11" ry="15" fill="#ffd2a8" stroke="#0b0b10" stroke-width="5"/>
+            <circle cx="88" cy="176" r="5" fill="#c6f432" stroke="#0b0b10" stroke-width="3"/>
+            <path d="M86 140 C62 60 128 36 162 46 C204 32 262 70 234 140 C222 102 192 92 160 92 C128 92 104 104 86 140Z" fill="#14141d" stroke="#0b0b10" stroke-width="5" stroke-linejoin="round"/>
+            <circle cx="118" cy="44" r="16" fill="#14141d" stroke="#0b0b10" stroke-width="5"/>
+            <circle cx="170" cy="30" r="18" fill="#14141d" stroke="#0b0b10" stroke-width="5"/>
+            <circle cx="222" cy="52" r="15" fill="#14141d" stroke="#0b0b10" stroke-width="5"/>
+            <circle cx="132" cy="150" r="11" fill="#fff" stroke="#0b0b10" stroke-width="4"/><circle cx="135" cy="151" r="5" fill="#0b0b10"/>
+            <path d="M184 152 Q196 140 208 152" fill="none" stroke="#0b0b10" stroke-width="6" stroke-linecap="round"/>
+            <path d="M120 182 Q160 226 200 182 Z" fill="#fff" stroke="#0b0b10" stroke-width="5" stroke-linejoin="round"/>
+            <path d="M138 198 Q160 212 182 198" fill="#ff6b81" opacity=".9"/>
+            <circle cx="108" cy="178" r="9" fill="#ff9aa2" opacity=".55"/><circle cx="214" cy="178" r="9" fill="#ff9aa2" opacity=".55"/>
+          </svg>
+          <span class="sticker s-code">&lt;/&gt;</span>
+          <span class="sticker s-star">★</span>
+          <span class="sticker s-bolt">⚡</span>
         </div>
       </div>
     </section>
 
+    <!-- PROJECTS -->
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">Featured Projects</h2>
+          <a href="#contact" class="link-arrow">Work with me <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="projects-grid" id="projects-grid"></div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section">
+      <div class="container panel skills-panel">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-grid">
+          <div class="skill" style="--c:#f97316"><span class="hex">H5</span><b>HTML5</b><div class="bar"><i data-level="95"></i></div></div>
+          <div class="skill" style="--c:#38bdf8"><span class="hex">CSS</span><b>CSS3 / Tailwind</b><div class="bar"><i data-level="90"></i></div></div>
+          <div class="skill" style="--c:#facc15"><span class="hex">JS</span><b>JavaScript ES6+</b><div class="bar"><i data-level="88"></i></div></div>
+          <div class="skill" style="--c:#22d3ee"><span class="hex">Re</span><b>React</b><div class="bar"><i data-level="75"></i></div></div>
+          <div class="skill" style="--c:#4ade80"><span class="hex">No</span><b>Node.js</b><div class="bar"><i data-level="70"></i></div></div>
+          <div class="skill" style="--c:#fb7185"><span class="hex">Gi</span><b>Git &amp; GitHub</b><div class="bar"><i data-level="85"></i></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
     <section id="about" class="section">
-      <div class="container about">
-        <div class="avatar" aria-hidden="true">YN</div>
+      <div class="container panel about">
+        <div class="sticker-card" aria-hidden="true">
+          <span>Focus</span><span>Discipline</span><span>Consistency</span>
+        </div>
         <div>
           <h2 class="section-title">About Me</h2>
-          <p>I am a passionate web developer who enjoys turning ideas into clean, usable products. I focus on semantic HTML, maintainable CSS and well-structured JavaScript, and I love learning new tools.</p>
+          <p>I'm a passionate web developer who loves turning ideas into playful, usable products. I care about semantic HTML, maintainable CSS and clean JavaScript &mdash; and I never stop learning new tools.</p>
           <ul class="stats">
             <li><strong>4+</strong><span>Projects</span></li>
             <li><strong>1+</strong><span>Years learning</span></li>
@@ -54,42 +119,24 @@
       </div>
     </section>
 
-    <section id="skills" class="section alt">
-      <div class="container">
-        <h2 class="section-title center">Tech Stack &amp; Skills</h2>
-        <div class="skills-grid">
-          <div class="skill"><span>HTML5</span><div class="bar"><i data-level="95"></i></div></div>
-          <div class="skill"><span>CSS3 / Tailwind</span><div class="bar"><i data-level="90"></i></div></div>
-          <div class="skill"><span>JavaScript (ES6+)</span><div class="bar"><i data-level="88"></i></div></div>
-          <div class="skill"><span>React</span><div class="bar"><i data-level="75"></i></div></div>
-          <div class="skill"><span>Node.js</span><div class="bar"><i data-level="70"></i></div></div>
-          <div class="skill"><span>Git &amp; GitHub</span><div class="bar"><i data-level="85"></i></div></div>
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="container panel contact">
+        <div class="contact-copy">
+          <h2 class="big-cta">Let's make something <span class="circled">dope!</span></h2>
+          <ul class="socials">
+            <li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="mailto:you@example.com">Email</a></li>
+          </ul>
         </div>
-      </div>
-    </section>
-
-    <section id="projects" class="section">
-      <div class="container">
-        <h2 class="section-title center">Featured Projects</h2>
-        <div class="projects-grid" id="projects-grid"></div>
-      </div>
-    </section>
-
-    <section id="contact" class="section alt">
-      <div class="container contact">
-        <h2 class="section-title center">Get In Touch</h2>
         <form id="contact-form" novalidate>
           <label>Name <input type="text" id="c-name" required /></label>
           <label>Email <input type="email" id="c-email" required /></label>
           <label>Message <textarea id="c-msg" rows="4" required></textarea></label>
           <p id="form-status" role="status"></p>
-          <button type="submit" class="btn btn-primary">Send Message</button>
+          <button type="submit" class="btn btn-lime">Send Message</button>
         </form>
-        <ul class="socials">
-          <li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></li>
-          <li><a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li>
-          <li><a href="mailto:you@example.com">Email</a></li>
-        </ul>
       </div>
     </section>
   </main>
