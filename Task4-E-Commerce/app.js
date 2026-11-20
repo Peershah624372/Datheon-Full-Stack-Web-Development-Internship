@@ -61,7 +61,7 @@ function renderProducts() {
       <span class="tag">${esc(p.category)}</span>
       ${p.rating.rate >= 4.5 ? '<span class="tag hot">🔥 Top rated</span>' : ""}
       <div class="img" data-view="${p.id}"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy" /></div>
-      <h3>${esc(p.title)}</h3>
+      <h2>${esc(p.title)}</h2>
       <div class="rating">${stars(p.rating.rate)} <span>(${p.rating.count})</span></div>
       <div class="price-row"><span class="price">${money(p.price)}</span><button class="add" data-add="${p.id}">Add</button></div>
     </article>`).join("");
@@ -72,7 +72,11 @@ function renderProducts() {
 /* ---------- Cart ---------- */
 function saveCart() { try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch {} }
 function loadCart() {
-  try { const c = JSON.parse(localStorage.getItem(CART_KEY)); cart = Array.isArray(c) ? c : []; } catch { cart = []; }
+  try {
+    const c = JSON.parse(localStorage.getItem(CART_KEY));
+    // keep only well-formed lines: numeric id, positive integer quantity
+    cart = Array.isArray(c) ? c.filter((i) => i && Number.isInteger(i.id) && Number.isInteger(i.qty) && i.qty > 0) : [];
+  } catch { cart = []; }
 }
 function addToCart(id) {
   const item = cart.find((i) => i.id === id);
@@ -123,6 +127,7 @@ function renderCart() {
 function toggleDrawer(open) {
   $("#drawer").classList.toggle("open", open);
   $("#drawer").setAttribute("aria-hidden", !open);
+  $("#drawer").inert = !open; // closed drawer must not be focusable
   $("#overlay").hidden = !open;
 }
 
@@ -175,5 +180,6 @@ $("#search").addEventListener("input", (e) => { query = e.target.value.trim().to
 $("#sort").addEventListener("change", (e) => { sortBy = e.target.value; renderProducts(); });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") { closeModal(); toggleDrawer(false); } });
 
+$("#drawer").inert = true;
 loadCart();
 loadProducts();
