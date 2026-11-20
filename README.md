@@ -7,17 +7,28 @@ All four internship tasks, built with vanilla HTML5, CSS3 and JavaScript (ES6+).
 | 1 | [Developer Portfolio](Task1-Portfolio/) | Beginner | Bold creative design with illustrated SVG avatar, mobile-first Flexbox/Grid layout, dark/light theme (saved), smooth scroll, hamburger menu, project modal popups, skill badges, form validation |
 | 2 | [Task Manager (CRUD)](Task2-Task-Manager/) | Beginner | Dashboard layout with category sidebar, progress bars, efficiency rings, completed-tasks chart and upcoming-deadline plan. Add/edit/delete, categories (Work/Personal/Study), due dates + overdue flag, All/Active/Completed filters, search, drag-and-drop reorder, `localStorage` persistence, completion animations |
 | 3 | [Weather Forecast App](Task3-Weather-App/) | Intermediate | Widget dashboard: current weather, sunrise/sunset arc, hourly and 5-day forecast, precipitation, wind, humidity, pressure, UV index, air-quality gauge and alert banner. `fetch` + `async/await` + `try/catch`, loading spinner, invalid-city errors, weather- and night-based themes, °C/°F |
-| 4 | [E-Commerce Store](Task4-E-Commerce/) | Intermediate | FakeStoreAPI catalog, category filter, search, sort, slide-out cart with badge, quantity +/−, tax and shipping calculation, persistent cart, simulated checkout |
+| 4 | [E-Commerce Store](Task4-E-Commerce/) | Intermediate | Architectural storefront design with arch-shaped collection filters, live hero scene and featured pick. FakeStoreAPI catalog, search, sort, slide-out cart with badge, quantity +/−, tax and shipping calculation, persistent cart, simulated checkout, newsletter form |
+
+## Screenshots
+
+| Task 1 – Portfolio | Task 2 – Task Manager |
+|---|---|
+| ![Developer portfolio](screenshots/task1-portfolio.jpg) | ![Task management dashboard](screenshots/task2-task-manager.jpg) |
+| **Task 3 – Weather App** | **Task 4 – E-Commerce Store** |
+| ![Weather dashboard](screenshots/task3-weather.jpg) | ![E-commerce store](screenshots/task4-ecommerce.jpg) |
+
+Mobile views: [portfolio](screenshots/task1-portfolio-mobile.jpg) · [store](screenshots/task4-ecommerce-mobile.jpg)
 
 ## Folder structure
 
 ```
 .
-├── index.html              # landing page linking all projects
+├── index.html              # landing page showcasing all projects
+├── screenshots/            # project screenshots used by the README and landing page
 ├── Task1-Portfolio/        # index.html, css/style.css, js/script.js, resume.html
 ├── Task2-Task-Manager/     # index.html, style.css, app.js
 ├── Task3-Weather-App/      # index.html, style.css, app.js
-└── Task4-E-Commerce/       # index.html, style.css, app.js
+└── Task4-E-Commerce/       # index.html, style.css, app.js, products.json
 ```
 
 ## Run locally

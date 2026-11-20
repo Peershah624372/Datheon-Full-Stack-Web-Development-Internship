@@ -34,6 +34,7 @@ async function loadProducts() {
     }
     $("#status").textContent = "";
     renderProducts();
+    renderShowcase();
     renderCart();
   } catch {
     $("#status").innerHTML = '⚠️ Could not load products. Check your connection.<br><button class="retry" id="retry">Retry</button>';
@@ -53,20 +54,43 @@ function filtered() {
   return list;
 }
 const stars = (r) => "★".repeat(Math.round(r)) + "☆".repeat(5 - Math.round(r));
+// soft arch background per collection (matches the collection tiles)
+const TINT = { electronics: "#f7d6d1", jewelery: "#d8ece1", "men's clothing": "#fbe1c6", "women's clothing": "#fbe4d8" };
 
 function renderProducts() {
   const list = filtered();
-  $("#products").innerHTML = list.map((p) => `
-    <article class="product">
+  $("#products").innerHTML = list.map((p, i) => `
+    <article class="product" style="--tint:${TINT[p.category] || "#efe6f8"};animation-delay:${Math.min(i, 12) * 40}ms">
       <span class="tag">${esc(p.category)}</span>
-      ${p.rating.rate >= 4.5 ? '<span class="tag hot">🔥 Top rated</span>' : ""}
-      <div class="img" data-view="${p.id}"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy" /></div>
+      ${p.rating.rate >= 4.5 ? '<span class="tag hot">Top rated!</span>' : ""}
+      <div class="img" data-view="${p.id}" role="button" tabindex="0" aria-label="View details: ${esc(p.title)}"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy" /></div>
       <h2>${esc(p.title)}</h2>
       <div class="rating">${stars(p.rating.rate)} <span>(${p.rating.count})</span></div>
-      <div class="price-row"><span class="price">${money(p.price)}</span><button class="add" data-add="${p.id}">Add</button></div>
+      <div class="price-row"><span class="price">${money(p.price)}</span><button class="add" data-add="${p.id}">Add to cart</button></div>
     </article>`).join("");
+  $("#count").textContent = products.length ? `(${list.length} item${list.length === 1 ? "" : "s"})` : "";
   if (!list.length) $("#status").textContent = "No products match your search.";
   else if (products.length) $("#status").textContent = "";
+}
+
+/* ---------- Hero scene + featured pick (filled from live product data) ---------- */
+function renderShowcase() {
+  const best = [...products].sort((a, b) => b.rating.rate - a.rating.rate || b.rating.count - a.rating.count);
+  // one top product from each of three different collections for the hero pedestals
+  const picks = [];
+  for (const p of best) if (!picks.some((x) => x.category === p.category) && picks.length < 3) picks.push(p);
+  picks.forEach((p, i) => { const img = $("#hp" + (i + 1)); img.src = p.image; });
+
+  const f = best[0];
+  if (!f) return;
+  $("#feat-img").src = f.image;
+  const second = best.find((p) => p.category !== f.category);
+  if (second) $("#feat-img2").src = second.image;
+  $("#feat-info").innerHTML = `
+    <h3>${esc(f.title)}</h3>
+    <div class="stars">${stars(f.rating.rate)} <span>${f.rating.rate} · ${f.rating.count} reviews</span></div>
+    <span class="feat-price">${money(f.price)}</span>
+    <div class="feat-actions"><button class="btn btn-red" data-add="${f.id}">Add to cart</button><button class="btn btn-ghost" data-view="${f.id}">View details</button></div>`;
 }
 
 /* ---------- Cart ---------- */
@@ -178,8 +202,24 @@ $("#overlay").addEventListener("click", () => toggleDrawer(false));
 $("#checkout-btn").addEventListener("click", checkout);
 $("#search").addEventListener("input", (e) => { query = e.target.value.trim().toLowerCase(); renderProducts(); });
 $("#sort").addEventListener("change", (e) => { sortBy = e.target.value; renderProducts(); });
-document.addEventListener("keydown", (e) => { if (e.key === "Escape") { closeModal(); toggleDrawer(false); } });
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") { closeModal(); toggleDrawer(false); }
+  // product image tiles act as buttons: open details with Enter / Space
+  const tile = e.target.closest?.("[data-view][role=button]");
+  if (tile && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); viewProduct(+tile.dataset.view); }
+});
 
+// Newsletter sign-up (demo: validates and confirms, nothing is sent)
+$("#nl-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const email = $("#nl-email").value.trim(), status = $("#nl-status");
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  status.className = "nl-status" + (ok ? "" : " err");
+  status.textContent = ok ? "🎉 You're in! Watch your inbox for exclusive drops." : "Please enter a valid email address.";
+  if (ok) e.target.reset();
+});
+
+$("#year").textContent = new Date().getFullYear();
 $("#drawer").inert = true;
 loadCart();
 loadProducts();
