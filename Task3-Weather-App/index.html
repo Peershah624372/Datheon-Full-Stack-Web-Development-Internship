@@ -93,7 +93,9 @@
     </section>
   </main>
 
-  <footer class="credit">Data: <a href="https://openweathermap.org/" target="_blank" rel="noopener">OpenWeatherMap</a> · UV &amp; fallback: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a></footer>
+  <footer class="credit">Weather data: <a id="data-source" href="https://openweathermap.org/" target="_blank" rel="noopener">OpenWeatherMap</a> · UV &amp; fallback: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a></footer>
+  <!-- optional, git-ignored: defines window.WEATHER_CONFIG = { owmKey: "..." } for local development -->
+  <script src="config.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

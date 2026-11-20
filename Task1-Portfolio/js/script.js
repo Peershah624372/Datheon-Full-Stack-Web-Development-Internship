@@ -5,13 +5,16 @@
    Leave a value empty ("") to hide that link.
    ========================================================= */
 const CONFIG = {
-  email: "",     // e.g. "you@example.com"
-  github: "",    // e.g. "https://github.com/your-username"
-  linkedin: "",  // e.g. "https://www.linkedin.com/in/your-profile"
+  email: "peershah624372@gmail.com",
+  github: "",    // e.g. "https://github.com/your-username" (filled in automatically on GitHub Pages)
+  linkedin: "https://www.linkedin.com/in/peer-shah-a14622401",
   upwork: "",    // e.g. "https://www.upwork.com/freelancers/~your-id"
 };
-// GitHub repo of this internship (used for the "Source code" links of the web apps)
-const REPO = "https://github.com/your-username/Datheon_Full_Stack_Web_Development_Internship";
+// GitHub repo of this internship, worked out by ../repo-link.js (empty when opened locally:
+// the "Source code" buttons are then hidden instead of pointing to a broken link)
+const REPO = window.REPO_URL || "";
+if (!CONFIG.github && REPO) CONFIG.github = REPO.split("/").slice(0, 4).join("/"); // https://github.com/<user>
+const repoPath = (folder) => (REPO ? `${REPO}/tree/main/${folder}` : "");
 
 /* ---------- Projects (from the résumé + the four internship tasks) ---------- */
 const projects = [
@@ -63,19 +66,19 @@ const projects = [
     title: "Task Manager", full: "TaskFlow — Task Manager", cat: "web", label: "Datheon · Task 2", img: "../screenshots/task2-task-manager.jpg",
     desc: "A CRUD task app with categories, due dates, filters, undo, drag-and-drop and a progress dashboard — all saved in localStorage.",
     points: ["Add, edit, complete and delete tasks; undo deletions.", "Filters, search, sort and keyboard reordering.", "Progress bars, efficiency rings and an upcoming-deadline plan."],
-    tags: ["JavaScript", "localStorage", "DOM"], live: "../Task2-Task-Manager/index.html", code: `${REPO}/tree/main/Task2-Task-Manager`,
+    tags: ["JavaScript", "localStorage", "DOM"], live: "../Task2-Task-Manager/index.html", code: repoPath("Task2-Task-Manager"),
   },
   {
     title: "Weather Dashboard", full: "Weather Dashboard", cat: "web", label: "Datheon · Task 3", img: "../screenshots/task3-weather.jpg",
     desc: "Live weather, hourly and 5-day forecasts, sunrise/sunset, air quality and UV with weather-based themes and solid error handling.",
     points: ["OpenWeatherMap with an automatic Open-Meteo fallback.", "Request timeouts, out-of-order protection and recent searches.", "°C/°F and km/h ↔ mph, remembered between visits."],
-    tags: ["Fetch API", "Async/Await", "REST"], live: "../Task3-Weather-App/index.html", code: `${REPO}/tree/main/Task3-Weather-App`,
+    tags: ["Fetch API", "Async/Await", "REST"], live: "../Task3-Weather-App/index.html", code: repoPath("Task3-Weather-App"),
   },
   {
     title: "E-Commerce Store", full: "ShopEase — E-Commerce Store", cat: "web", label: "Datheon · Task 4", img: "../screenshots/task4-ecommerce.jpg",
     desc: "A storefront on FakeStoreAPI with collection filters, search, a slide-out cart and a validated checkout flow.",
     points: ["Cart with quantities, tax and free-shipping threshold, saved across visits.", "Checkout form with validation and an itemised receipt.", "Keyboard-friendly drawer and dialogs."],
-    tags: ["JavaScript", "CSS Grid", "State"], live: "../Task4-E-Commerce/index.html", code: `${REPO}/tree/main/Task4-E-Commerce`,
+    tags: ["JavaScript", "CSS Grid", "State"], live: "../Task4-E-Commerce/index.html", code: repoPath("Task4-E-Commerce"),
   },
 ];
 const CAT_LABEL = { ai: "AI & Agents", automation: "Automation", web: "Web App" };
@@ -118,7 +121,7 @@ matchMedia("(min-width: 821px)").addEventListener("change", (e) => { if (e.match
 /* ---------- Social links from CONFIG ---------- */
 const socials = $("#socials");
 [
-  ["email", CONFIG.email && `mailto:${CONFIG.email}`, "✉ Email"],
+  ["email", CONFIG.email && `mailto:${CONFIG.email}`, `✉ ${CONFIG.email}`],
   ["github", CONFIG.github, "GitHub ↗"],
   ["linkedin", CONFIG.linkedin, "LinkedIn ↗"],
   ["upwork", CONFIG.upwork, "Hire me on Upwork ↗"],

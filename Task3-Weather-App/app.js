@@ -7,9 +7,15 @@
    All data is normalised into one "model" object before rendering.
    =================================================================== */
 
-// NOTE: client-side keys are visible to anyone. Use a free-tier key only.
-const OWM_KEY = "";
+/* OpenWeatherMap access – the API key is never stored in this repository.
+   1. Local development: copy config.example.js to config.js (git-ignored) and put your key there.
+   2. Production (Vercel): the serverless function ../api/owm.js adds the key on the server
+      (environment variable OWM_KEY), so the key never reaches the browser.
+   3. Neither available (e.g. GitHub Pages): the app falls back to Open-Meteo, which needs no key. */
+const OWM_KEY = (window.WEATHER_CONFIG && window.WEATHER_CONFIG.owmKey) || "";
 const OWM = "https://api.openweathermap.org/data/2.5";
+const OWM_PROXY = "../api/owm";
+let owmOff = false; // set once OpenWeatherMap turns out to be unavailable, to skip it on later searches
 const GEO_URL = "https://geocoding-api.open-meteo.com/v1/search";
 const WX_URL = "https://api.open-meteo.com/v1/forecast";
 const AQ_URL = "https://air-quality-api.open-meteo.com/v1/air-quality";
@@ -46,7 +52,7 @@ let reqId = 0;     // increases with every request; stale responses are ignored
 class WeatherError extends Error {}
 
 /* ---------- fetch helpers ---------- */
-const TIMEOUT_MS = 10000;
+const TIMEOUT_MS = 20000; // generous: first connections on slow mobile networks can take several seconds
 // fetch with a timeout, so a stalled request ends with a clear message instead of an endless spinner
 async function fetchT(url) {
   const ctrl = new AbortController();
@@ -63,9 +69,15 @@ async function fetchJSON(url) {
   return res.json();
 }
 async function owmFetch(path, query) {
-  const res = await fetchT(`${OWM}/${path}?${query}&units=metric&appid=${OWM_KEY}`);
+  if (owmOff) throw new Error("OWM_UNAVAILABLE");
+  const url = OWM_KEY
+    ? `${OWM}/${path}?${query}&units=metric&appid=${OWM_KEY}` // local dev key from config.js
+    : `${OWM_PROXY}?path=${path}&${query}`;                    // server-side key via the proxy
+  const res = await fetchT(url);
+  // no proxy on this host (HTML 404 page), key missing/invalid, or proxy not configured -> use Open-Meteo
+  const isJSON = (res.headers.get("content-type") || "").includes("json");
+  if (!isJSON || res.status === 401 || res.status === 503) { owmOff = true; throw new Error("OWM_UNAVAILABLE"); }
   if (res.status === 404) throw new WeatherError("City not found. Check the spelling and try again.");
-  if (res.status === 401) throw new Error("OWM_KEY_INACTIVE");
   if (!res.ok) throw new WeatherError(`Weather service error (${res.status}). Try again later.`);
   return res.json();
 }
@@ -124,6 +136,7 @@ async function getOWM(query) {
   });
 
   return {
+    source: "OpenWeatherMap",
     place: [cur.name, cur.sys.country].filter(Boolean).join(", "),
     now, sunrise, sunset, isDay: now >= sunrise && now < sunset,
     cur: {
@@ -165,6 +178,7 @@ async function getOpenMeteo({ latitude, longitude, label }) {
   for (let i = i0; i < d.hourly.time.length && hourly.length < 8; i += 3)
     hourly.push({ lt: LT(d.hourly.time[i]), temp: d.hourly.temperature_2m[i], code: d.hourly.weather_code[i], pop: d.hourly.precipitation_probability[i] ?? 0 });
   return {
+    source: "Open-Meteo",
     place: label || "Your location",
     now, sunrise: LT(d.daily.sunrise[0]), sunset: LT(d.daily.sunset[0]), isDay: !!c.is_day,
     cur: { temp: c.temperature_2m, feels: c.apparent_temperature, humidity: c.relative_humidity_2m, pressure: c.pressure_msl, wind: Math.round(c.wind_speed_10m), code: c.weather_code },
@@ -262,6 +276,9 @@ function render(m) {
     $("aqi-detail").textContent = "";
   }
   renderAlert(m);
+  const src = $("data-source");
+  src.textContent = m.source;
+  src.href = m.source === "OpenWeatherMap" ? "https://openweathermap.org/" : "https://open-meteo.com/";
   $("weather").hidden = false;
 }
 
@@ -293,8 +310,8 @@ async function load(owmQuery, fallbackGeo) {
     let model;
     try { model = await getOWM(owmQuery); }
     catch (err) {
-      if (err.message !== "OWM_KEY_INACTIVE") throw err;
-      console.warn("OpenWeatherMap key not active, falling back to Open-Meteo");
+      if (err.message !== "OWM_UNAVAILABLE") throw err;
+      console.info("OpenWeatherMap not available here, using Open-Meteo");
       model = await getOpenMeteo(await fallbackGeo());
     }
     if (req !== reqId) return false; // a newer search was started meanwhile: drop this result

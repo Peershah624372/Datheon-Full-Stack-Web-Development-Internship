@@ -1,2 +1,8 @@
 .DS_Store
 node_modules/
+
+# secrets – never commit API keys
+Task3-Weather-App/config.js
+.env
+.env.*
+.vercel
