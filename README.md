@@ -4,15 +4,15 @@ Four web projects built by **Peer Shah** for the Datheon Full Stack Web Developm
 
 ## Live demo
 
-| Project | GitHub Pages | Vercel |
-|---------|--------------|--------|
-| Landing page (all projects) | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/) |
-| Task 1 – Developer Portfolio | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/Task1-Portfolio/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/Task1-Portfolio/) |
-| Task 2 – Task Manager | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/Task2-Task-Manager/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/Task2-Task-Manager/) |
-| Task 3 – Weather App | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/Task3-Weather-App/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/Task3-Weather-App/) |
-| Task 4 – E-Commerce Store | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/Task4-E-Commerce/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/Task4-E-Commerce/) |
+| Project | Live link |
+|---------|-----------|
+| Landing page (all projects) | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/) |
+| Task 1 – Developer Portfolio | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/Task1-Portfolio/) |
+| Task 2 – Task Manager | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/Task2-Task-Manager/) |
+| Task 3 – Weather App | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/Task3-Weather-App/) |
+| Task 4 – E-Commerce Store | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/Task4-E-Commerce/) |
 
-> On **Vercel** the weather app uses OpenWeatherMap through a server-side proxy (the API key stays hidden). On **GitHub Pages**, which can't run server code, it uses Open-Meteo instead. Everything else is identical.
+Hosted on GitHub Pages.
 
 ## Projects
 
@@ -39,7 +39,7 @@ Mobile views: [portfolio](screenshots/task1-portfolio-mobile.jpg) · [store](scr
 .
 ├── index.html              # landing page showcasing all projects
 ├── repo-link.js            # builds the "Source code" links to this GitHub repo
-├── api/owm.js              # Vercel serverless proxy that keeps the OpenWeatherMap key on the server
+├── api/owm.js              # optional serverless proxy that keeps the OpenWeatherMap key on a server
 ├── screenshots/            # project screenshots used by the README and landing page
 ├── Task1-Portfolio/        # index.html, css/style.css, js/script.js, resume.html, assets/ (résumé PDF + project art)
 ├── Task2-Task-Manager/     # index.html, style.css, app.js
@@ -73,25 +73,18 @@ python -m http.server 5500       # or: npx serve -l 5500 .
 
 Use a local server rather than opening the files directly: browsers block some `fetch` requests (such as the store's offline `products.json`) on `file://` pages.
 
-## Deploy
+## Deploy (GitHub Pages)
 
-### GitHub Pages
 1. Push this repository to GitHub as a **public** repo.
 2. **Settings → Pages → Build and deployment → Deploy from a branch**, branch `main`, folder `/ (root)`, then **Save**.
 3. After a minute the site is live at `https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/`.
-
-### Vercel
-1. Sign in at [vercel.com](https://vercel.com) with GitHub → **Add New… → Project** → import this repository.
-2. Framework preset **Other**; leave the build command and output directory empty.
-3. **Environment Variables:** add `OWM_KEY` = your OpenWeatherMap key.
-4. **Deploy.** Vercel serves the static files and runs `api/owm.js` as a serverless function.
 
 ## Weather API key
 
 The OpenWeatherMap key is **never stored in this repository**:
 - **Local development:** `Task3-Weather-App/config.js` (git-ignored), created from `config.example.js`.
-- **Vercel:** the `OWM_KEY` environment variable. The browser calls `/api/owm`, and the proxy adds the key on the server, so visitors can't see it.
-- **No key available** (GitHub Pages or a fresh clone): the app automatically uses [Open-Meteo](https://open-meteo.com/), which needs no key. The footer shows which service supplied the data.
+- **Server hosting (optional):** `api/owm.js` can run as a serverless function with the key in an `OWM_KEY` environment variable. The browser calls `/api/owm` and the key stays on the server, so visitors can't see it.
+- **No key available** (the GitHub Pages site or a fresh clone): the app automatically uses [Open-Meteo](https://open-meteo.com/), which needs no key. The footer shows which service supplied the data.
 
 ## Notes
 
