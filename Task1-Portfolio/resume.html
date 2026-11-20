@@ -20,12 +20,14 @@
     .tb:hover { border-color: var(--ink); }
     .tb:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     .page { width: min(820px, 100% - 32px); margin: 2rem auto 3rem; background: var(--page); border-radius: 18px; box-shadow: 0 30px 60px -30px rgba(40, 40, 20, .35); padding: clamp(1.5rem, 5vw, 3.2rem); }
-    header.top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap; padding-bottom: 1.3rem; border-bottom: 2px solid var(--ink); }
+    header.top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem; flex-wrap: nowrap; padding-bottom: 1.3rem; border-bottom: 2px solid var(--ink); }
     h1 { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-size: clamp(2.4rem, 6vw, 3.2rem); line-height: 1; letter-spacing: -.01em; }
     .role { font-weight: 600; margin-top: .45rem; font-size: 1rem; }
     .contact { text-align: right; color: var(--muted); font-size: .88rem; line-height: 1.7; }
     .mark { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 14px; background: var(--chip); color: #0d0f05; font-weight: 700; font-size: 1.1rem; margin-left: auto; margin-bottom: .5rem; }
     section { padding-top: 1.3rem; }
+    h2 { break-after: avoid; page-break-after: avoid; }
+    section > h2 + .job { break-before: avoid; }
     h2 { display: flex; align-items: center; gap: .7rem; font-size: .78rem; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); margin-bottom: .7rem; }
     h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
     p, li { font-size: .93rem; }
@@ -43,6 +45,7 @@
     .stack { font-size: .82rem; color: var(--muted); font-weight: 400; }
     .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2rem; }
     @media (max-width: 600px) {
+      header.top { flex-wrap: wrap; }
       .contact { text-align: left; }
       .mark { margin-left: 0; }
       .two { grid-template-columns: 1fr; }
@@ -55,6 +58,8 @@
       p, li { font-size: 9.6pt; }
       h1 { font-size: 30pt; }
       section { padding-top: 10pt; }
+      .contact { font-size: 9pt; line-height: 1.6; }
+      .mark { width: 40px; height: 40px; font-size: 13px; border-radius: 11px; margin-bottom: 4pt; }
       a { text-decoration: none; }
     }
   </style>
@@ -77,6 +82,7 @@
         Sukkur, Sindh, Pakistan (UTC+5)<br />
         <a href="mailto:peershah624372@gmail.com">peershah624372@gmail.com</a><br />
         <a href="https://www.linkedin.com/in/peer-shah-a14622401">linkedin.com/in/peer-shah-a14622401</a><br />
+        <a href="https://github.com/peershah624372">github.com/peershah624372</a><br />
         Freelance on Upwork
       </div>
     </header>

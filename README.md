@@ -1,6 +1,20 @@
 # Datheon Full Stack Web Development Internship
 
-All four internship tasks, built with vanilla HTML5, CSS3 and JavaScript (ES6+). No build step and no server are needed: open any `index.html`, or host the repo on GitHub Pages.
+Four web projects built by **Peer Shah** for the Datheon Full Stack Web Development Internship, using vanilla HTML5, CSS3 and JavaScript (ES6+). No frameworks and no build step.
+
+## Live demo
+
+| Project | GitHub Pages | Vercel |
+|---------|--------------|--------|
+| Landing page (all projects) | [Open](https://peershah624372.github.io/Datheon_Full_Stack_Web_Development_Internship/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/) |
+| Task 1 – Developer Portfolio | [Open](https://peershah624372.github.io/Datheon_Full_Stack_Web_Development_Internship/Task1-Portfolio/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/Task1-Portfolio/) |
+| Task 2 – Task Manager | [Open](https://peershah624372.github.io/Datheon_Full_Stack_Web_Development_Internship/Task2-Task-Manager/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/Task2-Task-Manager/) |
+| Task 3 – Weather App | [Open](https://peershah624372.github.io/Datheon_Full_Stack_Web_Development_Internship/Task3-Weather-App/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/Task3-Weather-App/) |
+| Task 4 – E-Commerce Store | [Open](https://peershah624372.github.io/Datheon_Full_Stack_Web_Development_Internship/Task4-E-Commerce/) | [Open](https://datheon-full-stack-web-development-internship.vercel.app/Task4-E-Commerce/) |
+
+> On **Vercel** the weather app uses OpenWeatherMap through a server-side proxy (the API key stays hidden). On **GitHub Pages**, which can't run server code, it uses Open-Meteo instead. Everything else is identical.
+
+## Projects
 
 | # | Project | Level | Highlights |
 |---|---------|-------|------------|
@@ -24,42 +38,67 @@ Mobile views: [portfolio](screenshots/task1-portfolio-mobile.jpg) · [store](scr
 ```
 .
 ├── index.html              # landing page showcasing all projects
+├── repo-link.js            # builds the "Source code" links to this GitHub repo
+├── api/owm.js              # Vercel serverless proxy that keeps the OpenWeatherMap key on the server
 ├── screenshots/            # project screenshots used by the README and landing page
 ├── Task1-Portfolio/        # index.html, css/style.css, js/script.js, resume.html, assets/ (résumé PDF + project art)
 ├── Task2-Task-Manager/     # index.html, style.css, app.js
-├── Task3-Weather-App/      # index.html, style.css, app.js
+├── Task3-Weather-App/      # index.html, style.css, app.js, config.example.js
 └── Task4-E-Commerce/       # index.html, style.css, app.js, products.json
 ```
 
 ## Architecture
 
-Every project is a static, client-side app: one HTML file, one stylesheet and one script, with no build step or backend. State lives in plain JavaScript variables and is re-rendered into the DOM; the browser's `localStorage` is the only persistence.
+Every project is a static, client-side app: one HTML file, one stylesheet and one script, with no build step. State lives in plain JavaScript variables and is re-rendered into the DOM; the browser's `localStorage` is the only persistence. The only server code is the optional weather proxy in `api/owm.js`.
 
 | Project | State and data flow | Persistence and fallbacks |
 |---------|--------------------|---------------------------|
 | **Task 1 – Portfolio** | A `projects` array in `js/script.js` drives the project cards, category filters and the modal popup; a `CONFIG` object holds the contact links (empty ones are hidden). The theme, hamburger menu, scroll-reveal (`IntersectionObserver`) and contact-form validation are small independent modules. | The chosen theme is saved in `localStorage`. |
 | **Task 2 – Task Manager** | A `tasks = []` array is the single source of truth. Every change (`addTask`, edit, toggle, delete, reorder) updates the array, calls `saveToLocalStorage()` and then `render()`, which rebuilds the list, filters, progress rings and charts. Deletions keep a snapshot so they can be undone for a few seconds. | Tasks are saved under the key `datheon.tasks.v1` and restored by `loadFromLocalStorage()` after a reload. |
-| **Task 3 – Weather App** | `load()` fetches data with `async/await` inside `try/catch` (each request has a 20 s timeout), then builds one weather model that every widget renders from. Every request gets an id, so a slow older response can never overwrite a newer search. Failures throw a `WeatherError` that is shown as a friendly message while the last good result stays visible. | OpenWeatherMap is the primary source. If its key is not active, the app falls back to Open-Meteo (geocoding + forecast), which needs no key. The last searched city, the 5 most recent searches and the °C/°F choice are remembered. |
+| **Task 3 – Weather App** | `load()` fetches data with `async/await` inside `try/catch` (each request has a 20 s timeout), then builds one weather model that every widget renders from. Every request gets an id, so a slow older response can never overwrite a newer search. Failures throw a `WeatherError` that is shown as a friendly message while the last good result stays visible. | OpenWeatherMap is the primary source (see [API key](#weather-api-key)). If it isn't available, the app falls back to Open-Meteo (geocoding + forecast), which needs no key. The last searched city, the 5 most recent searches and the °C/°F choice are remembered. |
 | **Task 4 – E-Commerce Store** | The `products` and `cart` arrays are the state. `addToCart()`, `removeFromCart()` and `updateQuantity()` change the cart, and `calculateTotal()` derives subtotal, 8% tax and shipping ($5.99, free over $100) before the drawer and badge re-render. `checkout()` opens a delivery form; `placeOrder()` validates it and shows the receipt. All API text goes through an `esc()` HTML-escaping helper. | The cart is saved in `localStorage`. Products come from FakeStoreAPI, with the bundled `products.json` used automatically if the API is unreachable. |
 
 ## Run locally
 
 ```bash
-git clone https://github.com/<your-username>/Datheon_Full_Stack_Web_Development_Internship.git
+git clone https://github.com/peershah624372/Datheon_Full_Stack_Web_Development_Internship.git
 cd Datheon_Full_Stack_Web_Development_Internship
-npx serve .        # or just open any index.html
+
+# optional: use OpenWeatherMap locally (otherwise the weather app uses Open-Meteo)
+cp Task3-Weather-App/config.example.js Task3-Weather-App/config.js   # then paste your key into config.js
+
+# serve the folder with any static server, then open http://localhost:5500
+python -m http.server 5500       # or: npx serve -l 5500 .
 ```
 
-## Live demo
+Use a local server rather than opening the files directly: browsers block some `fetch` requests (such as the store's offline `products.json`) on `file://` pages.
 
-Enable **GitHub Pages** (Settings → Pages → Deploy from branch → `main` / root). Then add the URL here:
-`https://<your-username>.github.io/Datheon_Full_Stack_Web_Development_Internship/`
+## Deploy
+
+### GitHub Pages
+1. Push this repository to GitHub as a **public** repo.
+2. **Settings → Pages → Build and deployment → Deploy from a branch**, branch `main`, folder `/ (root)`, then **Save**.
+3. After a minute the site is live at `https://peershah624372.github.io/Datheon_Full_Stack_Web_Development_Internship/`.
+
+### Vercel
+1. Sign in at [vercel.com](https://vercel.com) with GitHub → **Add New… → Project** → import this repository.
+2. Framework preset **Other**; leave the build command and output directory empty.
+3. **Environment Variables:** add `OWM_KEY` = your OpenWeatherMap key.
+4. **Deploy.** Vercel serves the static files and runs `api/owm.js` as a serverless function.
+
+## Weather API key
+
+The OpenWeatherMap key is **never stored in this repository**:
+- **Local development:** `Task3-Weather-App/config.js` (git-ignored), created from `config.example.js`.
+- **Vercel:** the `OWM_KEY` environment variable. The browser calls `/api/owm`, and the proxy adds the key on the server, so visitors can't see it.
+- **No key available** (GitHub Pages or a fresh clone): the app automatically uses [Open-Meteo](https://open-meteo.com/), which needs no key. The footer shows which service supplied the data.
 
 ## Notes
 
-- **Weather app & API key:** the app uses the [OpenWeatherMap](https://openweathermap.org/api) free API (current weather, 5-day forecast, air pollution). The key is **not stored in this repository**:
-  - *Local development:* copy `Task3-Weather-App/config.example.js` to `config.js` (git-ignored) and paste your key.
-  - *Production on Vercel:* add an environment variable `OWM_KEY`; the serverless proxy `api/owm.js` adds the key on the server, so it never reaches the browser.
-  - *No key available* (e.g. GitHub Pages or a fresh clone): the app automatically uses [Open-Meteo](https://open-meteo.com/), which needs no key. The footer shows which service supplied the data.
 - **Store** data comes from [FakeStoreAPI](https://fakestoreapi.com/products). A copy of the catalog is bundled as `Task4-E-Commerce/products.json` and used automatically if the API is unreachable.
-- **Personalise Task 1:** contact links are set in `CONFIG` at the top of `Task1-Portfolio/js/script.js` (empty ones are hidden). All "Source code" links are worked out automatically from the GitHub Pages address by `repo-link.js` (set `REPO_URL` there when hosting elsewhere). The résumé lives in `Task1-Portfolio/resume.html`; `assets/Peer_Shah_Resume.pdf` is printed from that page (open it in a browser → Print → Save as PDF to regenerate).
+- **Portfolio settings:** contact links are set in `CONFIG` at the top of `Task1-Portfolio/js/script.js` (empty ones are hidden). "Source code" links come from `REPO_URL` in `repo-link.js`. The résumé lives in `Task1-Portfolio/resume.html`; `assets/Peer_Shah_Resume.pdf` is printed from that page (open it in a browser → Print → Save as PDF to regenerate).
+
+## Author
+
+**Peer Shah** · AI Developer & Full-Stack Web
+[LinkedIn](https://www.linkedin.com/in/peer-shah-a14622401) · [Email](mailto:peershah624372@gmail.com)
