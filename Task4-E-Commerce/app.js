@@ -21,9 +21,17 @@ async function loadProducts() {
   $("#status").innerHTML = '<div class="spinner"></div>Loading products…';
   $("#products").innerHTML = "";
   try {
-    const res = await fetch(API);
-    if (!res.ok) throw new Error(res.status);
-    products = await res.json();
+    try {
+      const res = await fetch(API);
+      if (!res.ok) throw new Error(res.status);
+      products = await res.json();
+    } catch (apiErr) {
+      // FakeStoreAPI unreachable: use the bundled copy of the same catalog
+      console.warn("FakeStoreAPI unavailable, using local products.json", apiErr);
+      const res = await fetch("products.json");
+      if (!res.ok) throw new Error(res.status);
+      products = await res.json();
+    }
     $("#status").textContent = "";
     renderProducts();
     renderCart();

@@ -36,5 +36,5 @@ Enable **GitHub Pages** (Settings → Pages → Deploy from branch → `main` / 
 ## Notes
 
 - **Weather app** uses the [OpenWeatherMap](https://openweathermap.org/api) free API (current weather + 5-day forecast). If the key is not yet active, it automatically falls back to [Open-Meteo](https://open-meteo.com/), which needs no key. Use only a free-tier key, since client-side keys are visible to anyone.
-- **Store** data comes from [FakeStoreAPI](https://fakestoreapi.com/products).
+- **Store** data comes from [FakeStoreAPI](https://fakestoreapi.com/products). A copy of the catalog is bundled as `Task4-E-Commerce/products.json` and used automatically if the API is unreachable.
 - Personalise Task 1 by replacing "Your Name", the email, the social links and the project links.
