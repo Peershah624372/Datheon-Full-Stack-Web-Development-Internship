@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ShopEase – a demo storefront with collections, search, a slide-out cart and simulated checkout." />
   <title>ShopEase – E-Commerce Store</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E🛍️%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -11,6 +12,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <a href="#shop" class="skip-link">Skip to products</a>
   <!-- Header -->
   <header class="navbar">
     <a href="#top" class="brand">Shop<br>Ease<sup>™</sup></a>
@@ -21,7 +23,7 @@
       <a href="#story">Our Story</a>
       <a href="#newsletter">Journal</a>
     </nav>
-    <button id="cart-btn" class="cart-btn" aria-label="Open cart"><span aria-hidden="true">🛍️</span> Cart <span id="cart-count" class="badge">0</span></button>
+    <button id="cart-btn" class="cart-btn" aria-label="Open cart, 0 items" aria-controls="drawer" aria-expanded="false"><span aria-hidden="true">🛍️</span> Cart <span id="cart-count" class="badge">0</span></button>
   </header>
 
   <main id="top">
@@ -60,11 +62,11 @@
     <section id="collections" class="collections">
       <h2 class="title">Explore Our <br>Collections</h2>
       <div id="categories" class="arches" role="group" aria-label="Filter by collection">
-        <button class="cat active" data-cat="all" style="--bg:var(--lavender)"><span class="ci" aria-hidden="true">🛍️</span>Shop All<i aria-hidden="true">→</i></button>
-        <button class="cat dark" data-cat="electronics" style="--bg:var(--red)"><span class="ci" aria-hidden="true">🎧</span>Electronics<i aria-hidden="true">→</i></button>
-        <button class="cat" data-cat="jewelery" style="--bg:var(--sage)"><span class="ci" aria-hidden="true">💍</span>Jewelry<i aria-hidden="true">→</i></button>
-        <button class="cat" data-cat="men's clothing" style="--bg:var(--orange)"><span class="ci" aria-hidden="true">👔</span>Men's Clothing<i aria-hidden="true">→</i></button>
-        <button class="cat" data-cat="women's clothing" style="--bg:var(--peach)"><span class="ci" aria-hidden="true">👗</span>Women's Clothing<i aria-hidden="true">→</i></button>
+        <button class="cat active" aria-pressed="true" data-cat="all" style="--bg:var(--lavender)"><span class="ci" aria-hidden="true">🛍️</span>Shop All<i aria-hidden="true">→</i></button>
+        <button class="cat dark" aria-pressed="false" data-cat="electronics" style="--bg:var(--red)"><span class="ci" aria-hidden="true">🎧</span>Electronics<i aria-hidden="true">→</i></button>
+        <button class="cat" aria-pressed="false" data-cat="jewelery" style="--bg:var(--sage)"><span class="ci" aria-hidden="true">💍</span>Jewelry<i aria-hidden="true">→</i></button>
+        <button class="cat" aria-pressed="false" data-cat="men's clothing" style="--bg:var(--orange)"><span class="ci" aria-hidden="true">👔</span>Men's Clothing<i aria-hidden="true">→</i></button>
+        <button class="cat" aria-pressed="false" data-cat="women's clothing" style="--bg:var(--peach)"><span class="ci" aria-hidden="true">👗</span>Women's Clothing<i aria-hidden="true">→</i></button>
       </div>
     </section>
 
@@ -144,8 +146,8 @@
 
   <!-- Cart drawer -->
   <div id="overlay" class="overlay" hidden></div>
-  <aside id="drawer" class="drawer" aria-label="Shopping cart" aria-hidden="true">
-    <div class="drawer-head"><h2>Your Cart</h2><button id="close-cart" aria-label="Close cart">✕</button></div>
+  <aside id="drawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" aria-hidden="true">
+    <div class="drawer-head"><h2 id="drawer-title">Your Cart</h2><button id="close-cart" aria-label="Close cart">✕</button></div>
     <div id="cart-items" class="cart-items"></div>
     <div class="cart-summary">
       <div><span>Subtotal</span><span id="subtotal">$0.00</span></div>
@@ -158,10 +160,13 @@
   </aside>
 
   <div id="modal" class="modal" hidden>
-    <div class="modal-box" role="dialog" aria-modal="true" aria-label="Details">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-x" type="button" data-close aria-label="Close">✕</button>
       <div id="modal-content"></div>
     </div>
   </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden><span id="toast-msg"></span><button type="button" id="toast-view">View cart</button></div>
 
   <script src="app.js"></script>
 </body>

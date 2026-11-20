@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Live weather dashboard: current conditions, hourly and 5-day forecast, air quality and UV for any city." />
   <title>Weather Forecast</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E⛅%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,20 +19,22 @@
     <form id="search-form" class="search" role="search">
       <span class="pin" aria-hidden="true">📍</span>
       <input type="text" id="city-input" placeholder="Search any city…" aria-label="City name" autocomplete="off" required />
-      <button type="submit" class="go">Search</button>
+      <button type="submit" class="go" id="search-btn">Search</button>
       <span class="live-tag" aria-hidden="true">LIVE</span>
     </form>
     <div class="top-actions">
       <button type="button" id="locate-btn" class="round" title="Use my location" aria-label="Use my location">◎</button>
       <button type="button" id="unit-toggle" class="pill">Switch to °F</button>
     </div>
+    <nav id="recent" class="recent" aria-label="Recent searches" hidden></nav>
   </header>
 
   <main class="wrap">
     <div id="loader" class="loader" hidden><div class="spinner"></div><p>Fetching weather…</p></div>
     <div id="error" class="error" role="alert" hidden></div>
+    <p id="sr-status" class="sr-only" aria-live="polite"></p>
 
-    <section id="weather" class="dash" hidden aria-live="polite">
+    <section id="weather" class="dash" hidden aria-label="Weather dashboard">
       <!-- Current -->
       <article class="card current">
         <h2 class="card-head">Current weather <span class="badge-live">LIVE</span></h2>
@@ -75,7 +78,7 @@
       <!-- Widgets -->
       <div class="widgets">
         <article class="card mini"><h2>Precipitation</h2><div class="mini-row"><span class="mi" aria-hidden="true">🌧️</span><strong id="precip"></strong></div><small id="precip-sub"></small></article>
-        <article class="card mini"><h2>Wind speed</h2><div class="mini-row"><span class="mi" aria-hidden="true">💨</span><strong id="wind"></strong></div><small>at 10 m height</small></article>
+        <article class="card mini"><h2>Wind speed</h2><div class="mini-row"><span class="mi" aria-hidden="true">💨</span><strong id="wind"></strong></div><small id="wind-sub">at 10 m height</small></article>
         <article class="card mini"><h2>Humidity</h2><div class="mini-row"><span class="mi" aria-hidden="true">💧</span><strong id="humidity"></strong></div><small>relative humidity</small></article>
         <article class="card mini"><h2>Pressure</h2><div class="mini-row"><span class="mi" aria-hidden="true">🧭</span><strong id="pressure"></strong></div><small>sea level</small></article>
         <article class="card mini"><h2>UV index</h2><div class="mini-row"><span class="mi sunny" aria-hidden="true">☀️</span><strong id="uv"></strong></div><small id="uv-label"></small></article>

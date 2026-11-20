@@ -34,24 +34,36 @@ const AQI_TEXT = ["", "Good air", "Fair air", "Moderate air", "Poor air", "Very 
 const AQI_COLOR = ["", "#2fb37d", "#8bc34a", "#f5b400", "#f57c00", "#d32f2f"];
 
 const $ = (id) => document.getElementById(id);
-let useF = false;
+const store = {
+  get(k, fallback) { try { return JSON.parse(localStorage.getItem(k)) ?? fallback; } catch { return fallback; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+let useF = store.get("useF", false) === true;
 let last = null;   // last model, re-rendered on unit switch / day select
 let selDay = 0;
+let reqId = 0;     // increases with every request; stale responses are ignored
 
 class WeatherError extends Error {}
 
 /* ---------- fetch helpers ---------- */
+const TIMEOUT_MS = 10000;
+// fetch with a timeout, so a stalled request ends with a clear message instead of an endless spinner
+async function fetchT(url) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
+  try { return await fetch(url, { signal: ctrl.signal }); }
+  catch (err) {
+    if (err.name === "AbortError") throw new WeatherError("The weather service took too long to respond. Please try again.");
+    throw new WeatherError("Network error. Please check your internet connection.");
+  } finally { clearTimeout(timer); }
+}
 async function fetchJSON(url) {
-  let res;
-  try { res = await fetch(url); }
-  catch { throw new WeatherError("Network error. Please check your internet connection."); }
+  const res = await fetchT(url);
   if (!res.ok) throw new WeatherError(`Weather service error (${res.status}). Try again later.`);
   return res.json();
 }
 async function owmFetch(path, query) {
-  let res;
-  try { res = await fetch(`${OWM}/${path}?${query}&units=metric&appid=${OWM_KEY}`); }
-  catch { throw new WeatherError("Network error. Please check your internet connection."); }
+  const res = await fetchT(`${OWM}/${path}?${query}&units=metric&appid=${OWM_KEY}`);
   if (res.status === 404) throw new WeatherError("City not found. Check the spelling and try again.");
   if (res.status === 401) throw new Error("OWM_KEY_INACTIVE");
   if (!res.ok) throw new WeatherError(`Weather service error (${res.status}). Try again later.`);
@@ -180,11 +192,24 @@ const toUnit = (c) => Math.round(useF ? (c * 9) / 5 + 32 : c);
 const unit = () => (useF ? "°F" : "°C");
 const uvText = (u) => (u <= 2 ? "Low" : u <= 5 ? "Moderate" : u <= 7 ? "High" : u <= 10 ? "Very high" : "Extreme");
 
-function show(section) {
-  $("loader").hidden = section !== "loader";
-  $("weather").hidden = section !== "weather";
-  $("error").hidden = section !== "error";
+const windText = (kmh) => (useF ? `${Math.round(kmh / 1.609)} mph` : `${kmh} km/h`);
+
+/* ---------- UI states ----------
+   First load: spinner only. Later loads: the current dashboard stays visible (dimmed)
+   while new data loads, and an error never wipes out the last good result.      */
+function setLoading(on) {
+  const hasData = !!last;
+  $("loader").hidden = !(on && !hasData);
+  $("weather").classList.toggle("refreshing", on && hasData);
+  $("weather").setAttribute("aria-busy", String(on));
+  // the search button stays enabled: a new search simply replaces a slow one (see reqId)
+  $("search-btn").textContent = on ? "Loading…" : "Search";
 }
+function showError(msg) {
+  $("error").textContent = last ? `${msg} Still showing ${last.place}.` : msg;
+  $("error").hidden = false;
+}
+const clearError = () => { $("error").hidden = true; };
 
 function render(m) {
   const info = describe(m.cur.code, m.isDay);
@@ -222,7 +247,7 @@ function render(m) {
 
   // widgets
   renderPrecip(m);
-  $("wind").textContent = `${m.cur.wind} km/h`;
+  $("wind").textContent = windText(m.cur.wind);
   $("humidity").textContent = `${m.cur.humidity}%`;
   $("pressure").textContent = `${Math.round(m.cur.pressure)} hPa`;
   $("uv").textContent = m.uv == null ? "—" : Math.round(m.uv);
@@ -237,7 +262,7 @@ function render(m) {
     $("aqi-detail").textContent = "";
   }
   renderAlert(m);
-  show("weather");
+  $("weather").hidden = false;
 }
 
 function renderPrecip(m) {
@@ -261,26 +286,58 @@ function renderAlert(m) {
 
 /* ---------- loading flows ---------- */
 async function load(owmQuery, fallbackGeo) {
-  show("loader");
+  const req = ++reqId;
+  clearError();
+  setLoading(true);
   try {
-    try { last = await getOWM(owmQuery); }
+    let model;
+    try { model = await getOWM(owmQuery); }
     catch (err) {
       if (err.message !== "OWM_KEY_INACTIVE") throw err;
       console.warn("OpenWeatherMap key not active, falling back to Open-Meteo");
-      last = await getOpenMeteo(await fallbackGeo());
+      model = await getOpenMeteo(await fallbackGeo());
     }
+    if (req !== reqId) return false; // a newer search was started meanwhile: drop this result
+    last = model;
     selDay = 0;
     render(last);
+    $("sr-status").textContent = `Showing weather for ${last.place}: ${toUnit(last.cur.temp)}${unit()}, ${describe(last.cur.code, last.isDay).label}.`;
     return true;
   } catch (err) {
-    $("error").textContent = err instanceof WeatherError ? err.message : "Something went wrong. Please try again.";
-    show("error");
+    if (req !== reqId) return false;
+    showError(err instanceof WeatherError ? err.message : "Something went wrong. Please try again.");
     return false;
+  } finally {
+    if (req === reqId) setLoading(false);
   }
+}
+
+/* ---------- recent searches ---------- */
+const MAX_RECENT = 5;
+function renderRecent() {
+  const recent = store.get("recentCities", []);
+  const nav = $("recent");
+  nav.hidden = !recent.length;
+  // built with DOM methods so city names are never parsed as HTML
+  nav.replaceChildren(...recent.map((c) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.dataset.city = c;
+    b.textContent = c;
+    return b;
+  }));
+}
+function rememberCity(city) {
+  const nice = city.replace(/\s+/g, " ").replace(/(^|[\s-])\p{Ll}/gu, (s) => s.toUpperCase());
+  const recent = store.get("recentCities", []).filter((c) => c.toLowerCase() !== nice.toLowerCase());
+  store.set("recentCities", [nice, ...recent].slice(0, MAX_RECENT));
+  store.set("lastCity", nice);
+  renderRecent();
 }
 async function loadCity(city) {
   const ok = await load(`q=${encodeURIComponent(city)}`, () => geocode(city));
-  if (ok) try { localStorage.setItem("lastCity", city); } catch {}
+  if (ok) rememberCity(city);
 }
 
 /* ---------- events ---------- */
@@ -289,9 +346,20 @@ $("search-form").addEventListener("submit", (e) => {
   const city = $("city-input").value.trim();
   if (city) loadCity(city);
 });
+$("recent").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-city]");
+  if (!b) return;
+  $("city-input").value = b.textContent;
+  loadCity(b.textContent);
+});
+function syncUnitButton() {
+  $("unit-toggle").textContent = useF ? "Switch to °C" : "Switch to °F";
+  $("unit-toggle").setAttribute("aria-label", useF ? "Showing Fahrenheit. Switch to Celsius" : "Showing Celsius. Switch to Fahrenheit");
+}
 $("unit-toggle").addEventListener("click", () => {
   useF = !useF;
-  $("unit-toggle").textContent = useF ? "Switch to °C" : "Switch to °F";
+  store.set("useF", useF);
+  syncUnitButton();
   if (last) render(last);
 });
 $("forecast").addEventListener("click", (e) => {
@@ -302,16 +370,31 @@ $("forecast").addEventListener("click", (e) => {
   renderPrecip(last);
 });
 $("locate-btn").addEventListener("click", () => {
-  if (!navigator.geolocation) { $("error").textContent = "Geolocation is not supported by your browser."; return show("error"); }
-  show("loader");
+  if (!navigator.geolocation) return showError("Geolocation is not supported by your browser.");
+  const req = ++reqId;
+  clearError();
+  setLoading(true);
   navigator.geolocation.getCurrentPosition(
-    ({ coords }) => load(`lat=${coords.latitude}&lon=${coords.longitude}`, async () => ({ latitude: coords.latitude, longitude: coords.longitude, label: "Your location" })),
-    () => { $("error").textContent = "Location permission denied. Search for a city instead."; show("error"); }
+    ({ coords }) => {
+      if (req !== reqId) return;
+      const lat = coords.latitude.toFixed(4), lon = coords.longitude.toFixed(4);
+      load(`lat=${lat}&lon=${lon}`, async () => ({ latitude: lat, longitude: lon, label: "Your location" }));
+    },
+    (err) => {
+      if (req !== reqId) return;
+      setLoading(false);
+      showError(err.code === err.PERMISSION_DENIED ? "Location permission denied. Search for a city instead."
+        : err.code === err.TIMEOUT ? "Finding your location took too long. Search for a city instead."
+        : "Your location is unavailable right now. Search for a city instead.");
+    },
+    { timeout: 10000, maximumAge: 10 * 60 * 1000 }
   );
 });
 
-// initial load: last searched city or a default
+// initial load: last searched city (old plain-string value supported) or a default
 let initial = "London";
-try { initial = localStorage.getItem("lastCity") || initial; } catch {}
+try { const raw = localStorage.getItem("lastCity"); if (raw) initial = raw.startsWith('"') ? JSON.parse(raw) : raw; } catch {}
+syncUnitButton();
+renderRecent();
 $("city-input").value = initial;
 loadCity(initial);

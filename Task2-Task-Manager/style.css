@@ -8,6 +8,9 @@
 body { font-family: "Poppins", "Segoe UI", system-ui, sans-serif; background: var(--page); color: var(--text); min-height: 100vh; padding: 1.5rem; }
 button, input, select { font: inherit; }
 button { cursor: pointer; border: none; background: none; color: inherit; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .board { max-width: 1400px; margin: auto; background: var(--board); border-radius: 26px; box-shadow: 0 30px 60px rgba(40, 50, 110, .12); display: grid; grid-template-columns: 220px minmax(0, 1fr) 290px; min-height: calc(100vh - 3rem); overflow: hidden; }
 
@@ -37,6 +40,7 @@ input, select { padding: .65rem .9rem; border: 1px solid var(--border); border-r
 input:focus, select:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
 #submit-btn { background: var(--primary); color: #fff; padding: 0 1.2rem; border-radius: 12px; font-weight: 600; white-space: nowrap; transition: transform .2s; }
 #submit-btn:hover { transform: translateY(-1px); }
+input[aria-invalid] { border-color: var(--danger); }
 .error { color: var(--danger); min-height: 1.3em; font-size: .85rem; margin: .3rem 0 .4rem; }
 
 /* Progress "gantt" */
@@ -76,12 +80,25 @@ input:focus, select:focus { outline: 2px solid var(--primary); outline-offset: 1
 .chip { padding: .05rem .55rem; border-radius: 999px; background: var(--soft); font-weight: 600; }
 .chip.done { background: #dcfce7; color: #14532d; }
 .overdue { color: var(--danger); font-weight: 600; }
+.due-today { color: #9a5b00; font-weight: 600; }
+.edit-form { display: grid; gap: .45rem; }
 .edit-input { width: 100%; padding: .4rem .6rem; }
+.edit-row { display: flex; gap: .45rem; flex-wrap: wrap; }
+.edit-row > * { flex: 1 1 110px; min-width: 0; padding: .35rem .5rem; font-size: .82rem; }
+.edit-help { font-size: .72rem; color: var(--muted); }
+.task.editing { cursor: default; outline: 2px solid var(--primary); }
 .icon { font-size: 1rem; padding: .3rem .4rem; border-radius: 8px; opacity: .65; }
 .icon:hover { opacity: 1; background: var(--soft); }
 .empty { text-align: center; color: var(--muted); padding: 2.5rem 0; }
 .list-foot { display: flex; justify-content: space-between; margin-top: 1.3rem; font-size: .82rem; color: var(--muted); }
 .link-btn { color: var(--danger); font-weight: 600; }
+
+/* Undo toast */
+.toast { position: fixed; left: 50%; bottom: 1.4rem; transform: translateX(-50%); z-index: 50; display: flex; align-items: center; gap: 1rem; background: var(--text); color: #fff; padding: .75rem .9rem .75rem 1.2rem; border-radius: 14px; box-shadow: 0 14px 30px rgba(20, 25, 60, .3); font-size: .88rem; max-width: calc(100% - 2rem); animation: toastIn .25s ease; }
+.toast[hidden] { display: none; }
+.toast button { color: #c7c3ff; font-weight: 700; padding: .3rem .7rem; border-radius: 8px; }
+.toast button:hover { background: rgba(255, 255, 255, .12); }
+@keyframes toastIn { from { opacity: 0; transform: translate(-50%, 12px); } }
 
 /* ---------- Insights panel ---------- */
 .panel { padding: 1.8rem 1.4rem; border-left: 1px solid var(--border); display: flex; flex-direction: column; gap: 1.8rem; background: #fbfcff; }

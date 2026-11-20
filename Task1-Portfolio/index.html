@@ -1,155 +1,253 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Personal developer portfolio – projects, skills and contact." />
-  <title>Developer Portfolio</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E⚡%3C/text%3E%3C/svg%3E" />
+  <meta name="description" content="Peer Shah – AI developer building AI agents, n8n automations and full-stack web apps. Projects, skills, experience and contact." />
+  <meta name="theme-color" content="#0b0b0d" />
+  <meta property="og:title" content="Peer Shah – AI Developer & Full-Stack Web" />
+  <meta property="og:description" content="AI agents, automations and full-stack web apps. Projects, skills, experience and contact." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="../screenshots/task1-portfolio.jpg" />
+  <title>Peer Shah – AI Developer & Full-Stack Web</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 rx=%2724%27 fill=%27%23c6f432%27/%3E%3Ctext x=%2750%27 y=%2766%27 font-family=%27Arial%27 font-weight=%27700%27 font-size=%2744%27 text-anchor=%27middle%27 fill=%27%230d0f05%27%3EPS%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- HEADER -->
   <header class="header" id="header">
     <nav class="nav container" aria-label="Main navigation">
-      <a href="#home" class="logo">Your Name<span>.</span></a>
+      <a href="#home" class="logo" aria-label="Peer Shah, home"><span class="logo-mark" aria-hidden="true">PS</span><span class="logo-name">Peer Shah</span></a>
       <ul class="nav-links" id="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#projects">Projects</a></li>
+        <li><a href="#work">Work</a></li>
         <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li class="only-mobile"><a href="resume.html">Résumé ↗</a></li>
       </ul>
       <div class="nav-actions">
-        <button id="theme-toggle" class="icon-btn" aria-label="Toggle dark / light theme">☀️</button>
-        <button id="hamburger" class="icon-btn hamburger" aria-label="Open menu" aria-expanded="false">☰</button>
+        <button id="theme-toggle" class="icon-btn" type="button" aria-label="Switch to light theme" aria-pressed="false"><span aria-hidden="true">☀</span></button>
+        <a href="resume.html" class="btn btn-small btn-ghost hide-mobile">Résumé</a>
+        <button id="hamburger" class="icon-btn hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span aria-hidden="true">☰</span></button>
       </div>
     </nav>
   </header>
 
-  <main>
+  <main id="main" tabindex="-1">
     <!-- HERO -->
     <section id="home" class="hero">
-      <span class="blob b1" aria-hidden="true"></span>
-      <span class="blob b2" aria-hidden="true"></span>
-      <span class="blob b3" aria-hidden="true"></span>
+      <div class="hero-bg" aria-hidden="true"></div>
       <div class="container hero-grid">
-        <div class="hero-text">
-          <p class="hey">Hey,</p>
-          <h1><span class="im">I'm</span> Your&nbsp;Name</h1>
-          <p class="roles">Full Stack Developer <i>•</i> Frontend <i>•</i> Problem Solver</p>
-          <p class="typed"><span id="typed-text"></span><span class="cursor" aria-hidden="true">|</span></p>
+        <div class="hero-copy">
+          <p class="status"><span class="pulse" aria-hidden="true"></span> Available for freelance projects</p>
+          <h1>I build <em>AI agents</em>, automations &amp; full-stack web apps.</h1>
+          <p class="lead">Hi, I'm <strong>Peer Shah</strong> — an AI developer and BS Artificial Intelligence student in Sukkur, Pakistan. I turn repetitive work into n8n workflows, LLM-powered agents and fast, accessible web apps.</p>
           <div class="hero-cta">
-            <a href="#projects" class="btn btn-lime"><span aria-hidden="true">▶</span> View Projects</a>
-            <a href="resume.html" class="btn btn-outline" target="_blank" rel="noopener">Resume <span aria-hidden="true">↗</span></a>
+            <a href="#work" class="btn btn-primary">View my work <span aria-hidden="true">→</span></a>
+            <a href="assets/Peer_Shah_Resume.pdf" class="btn btn-ghost" download>Download résumé <span class="mono-tag">PDF</span></a>
           </div>
-          <p class="scroll-hint"><span class="mouse" aria-hidden="true"></span> Scroll down</p>
+          <ul class="hero-stats">
+            <li><strong>10</strong><span>projects shipped</span></li>
+            <li><strong>4</strong><span>hackathons</span></li>
+            <li><strong>UTC+5</strong><span>Sukkur, PK</span></li>
+          </ul>
         </div>
 
-        <div class="hero-art" aria-hidden="true">
-          <div class="bubble">Let's build something awesome!</div>
-          <svg class="avatar-svg" viewBox="0 0 320 360" role="img" focusable="false">
-            <path d="M30 360 C30 268 90 236 160 236 C230 236 290 268 290 360Z" fill="#7c3aed" stroke="#0b0b10" stroke-width="5"/>
-            <path d="M112 242 Q160 304 208 242 Z" fill="#5b21b6" stroke="#0b0b10" stroke-width="5" stroke-linejoin="round"/>
-            <path d="M138 300 L134 352 M182 300 L186 352" stroke="#c6f432" stroke-width="4" stroke-linecap="round"/>
-            <rect x="140" y="208" width="40" height="44" rx="16" fill="#f1b788" stroke="#0b0b10" stroke-width="5"/>
-            <ellipse cx="160" cy="150" rx="70" ry="76" fill="#ffd2a8" stroke="#0b0b10" stroke-width="5"/>
-            <ellipse cx="90" cy="158" rx="11" ry="15" fill="#ffd2a8" stroke="#0b0b10" stroke-width="5"/>
-            <circle cx="88" cy="176" r="5" fill="#c6f432" stroke="#0b0b10" stroke-width="3"/>
-            <path d="M86 140 C62 60 128 36 162 46 C204 32 262 70 234 140 C222 102 192 92 160 92 C128 92 104 104 86 140Z" fill="#14141d" stroke="#0b0b10" stroke-width="5" stroke-linejoin="round"/>
-            <circle cx="118" cy="44" r="16" fill="#14141d" stroke="#0b0b10" stroke-width="5"/>
-            <circle cx="170" cy="30" r="18" fill="#14141d" stroke="#0b0b10" stroke-width="5"/>
-            <circle cx="222" cy="52" r="15" fill="#14141d" stroke="#0b0b10" stroke-width="5"/>
-            <circle cx="132" cy="150" r="11" fill="#fff" stroke="#0b0b10" stroke-width="4"/><circle cx="135" cy="151" r="5" fill="#0b0b10"/>
-            <path d="M184 152 Q196 140 208 152" fill="none" stroke="#0b0b10" stroke-width="6" stroke-linecap="round"/>
-            <path d="M120 182 Q160 226 200 182 Z" fill="#fff" stroke="#0b0b10" stroke-width="5" stroke-linejoin="round"/>
-            <path d="M138 198 Q160 212 182 198" fill="#ff6b81" opacity=".9"/>
-            <circle cx="108" cy="178" r="9" fill="#ff9aa2" opacity=".55"/><circle cx="214" cy="178" r="9" fill="#ff9aa2" opacity=".55"/>
-          </svg>
-          <span class="sticker s-code">&lt;/&gt;</span>
-          <span class="sticker s-star">★</span>
-          <span class="sticker s-bolt">⚡</span>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="console">
+            <div class="console-bar"><i></i><i></i><i></i><span>~/agents — zsh</span></div>
+            <div class="console-body" id="console"></div>
+          </div>
+          <div class="chip-float cf-1"><span class="cf-dot"></span>n8n workflow · active</div>
+          <div class="chip-float cf-2">RAG · Chroma ✓</div>
+          <div class="chip-float cf-3">llama.cpp · offline</div>
         </div>
       </div>
     </section>
 
-    <!-- PROJECTS -->
-    <section id="projects" class="section">
+    <!-- TECH MARQUEE -->
+    <div class="marquee" aria-label="Technologies I work with">
+      <ul class="marquee-track">
+        <li>Python</li><li>TypeScript</li><li>JavaScript</li><li>n8n</li><li>LLM APIs</li><li>RAG</li><li>React</li><li>Node.js</li><li>FastAPI</li><li>PostgreSQL</li><li>llama.cpp</li><li>whisper.cpp</li><li>Express</li><li>Drizzle ORM</li><li>Git</li>
+      </ul>
+    </div>
+
+    <!-- WORK -->
+    <section id="work" class="section">
       <div class="container">
         <div class="section-head">
-          <h2 class="section-title">Featured Projects</h2>
-          <a href="#contact" class="link-arrow">Work with me <span aria-hidden="true">→</span></a>
+          <div>
+            <p class="eyebrow"><span>01</span> Selected work</p>
+            <h2 class="section-title">Things I've <em>built</em></h2>
+          </div>
+          <div class="filters" role="group" aria-label="Filter projects">
+            <button type="button" class="filter active" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="filter" data-filter="ai" aria-pressed="false">AI &amp; Agents</button>
+            <button type="button" class="filter" data-filter="automation" aria-pressed="false">Automation</button>
+            <button type="button" class="filter" data-filter="web" aria-pressed="false">Web Apps</button>
+          </div>
         </div>
         <div class="projects-grid" id="projects-grid"></div>
+        <p class="sr-only" id="filter-status" aria-live="polite"></p>
       </div>
     </section>
 
     <!-- SKILLS -->
     <section id="skills" class="section">
-      <div class="container panel skills-panel">
-        <h2 class="section-title">Skills</h2>
-        <div class="skills-grid">
-          <div class="skill" style="--c:#f97316"><span class="hex">H5</span><b>HTML5</b><div class="bar"><i data-level="95"></i></div></div>
-          <div class="skill" style="--c:#38bdf8"><span class="hex">CSS</span><b>CSS3 / Tailwind</b><div class="bar"><i data-level="90"></i></div></div>
-          <div class="skill" style="--c:#facc15"><span class="hex">JS</span><b>JavaScript ES6+</b><div class="bar"><i data-level="88"></i></div></div>
-          <div class="skill" style="--c:#22d3ee"><span class="hex">Re</span><b>React</b><div class="bar"><i data-level="75"></i></div></div>
-          <div class="skill" style="--c:#4ade80"><span class="hex">No</span><b>Node.js</b><div class="bar"><i data-level="70"></i></div></div>
-          <div class="skill" style="--c:#fb7185"><span class="hex">Gi</span><b>Git &amp; GitHub</b><div class="bar"><i data-level="85"></i></div></div>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow"><span>02</span> Toolkit</p>
+            <h2 class="section-title">Skills &amp; <em>stack</em></h2>
+          </div>
+          <p class="section-note">The tools I reach for to go from idea to a working version — fast.</p>
         </div>
+        <div class="skills-grid">
+          <article class="skill-card wide">
+            <header><span class="skill-ico" aria-hidden="true">✦</span><h3>AI &amp; agents</h3></header>
+            <ul class="chips"><li>LLM APIs</li><li>AI agent development</li><li>Agentic workflows</li><li>Multi-agent systems</li><li>RAG (Chroma, embeddings)</li><li>Prompt engineering</li><li>Chatbots</li><li>Local LLMs — llama.cpp, whisper.cpp, Piper TTS</li></ul>
+          </article>
+          <article class="skill-card">
+            <header><span class="skill-ico" aria-hidden="true">⟳</span><h3>Automation</h3></header>
+            <ul class="chips"><li>n8n workflows</li><li>API integration</li><li>CRM / email / spreadsheet automation</li><li>Data handling</li><li>Report automation</li></ul>
+          </article>
+          <article class="skill-card">
+            <header><span class="skill-ico" aria-hidden="true">{ }</span><h3>Languages</h3></header>
+            <ul class="chips"><li>Python</li><li>TypeScript</li><li>JavaScript</li><li>SQL</li><li>HTML5</li><li>CSS3</li></ul>
+          </article>
+          <article class="skill-card">
+            <header><span class="skill-ico" aria-hidden="true">⌘</span><h3>Web &amp; backend</h3></header>
+            <ul class="chips"><li>React</li><li>Vite</li><li>Node.js</li><li>Express</li><li>FastAPI</li><li>Flask</li><li>REST / OpenAPI (Orval, Zod)</li></ul>
+          </article>
+          <article class="skill-card">
+            <header><span class="skill-ico" aria-hidden="true">▤</span><h3>Data &amp; DevOps</h3></header>
+            <ul class="chips"><li>PostgreSQL</li><li>Drizzle ORM</li><li>pnpm monorepos</li><li>Git &amp; GitHub</li><li>Render</li><li>Replit</li></ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow"><span>03</span> Journey</p>
+            <h2 class="section-title">Experience &amp; <em>education</em></h2>
+          </div>
+          <a href="resume.html" class="link-arrow">Full résumé <span aria-hidden="true">↗</span></a>
+        </div>
+        <ol class="timeline">
+          <li class="tl-item">
+            <div class="tl-when"><span class="badge-now">Current</span></div>
+            <div class="tl-card">
+              <h3>Full Stack Web Developer Intern <span>— Datheon</span></h3>
+              <ul>
+                <li>Built four responsive web apps in vanilla HTML, CSS and JavaScript: this portfolio, a CRUD task manager, a REST-API weather dashboard and an e-commerce store.</li>
+                <li>Implemented <code>localStorage</code> persistence, async API calls with timeouts and fallbacks, cart / tax / shipping logic and a validated checkout.</li>
+                <li>Focused on accessibility: keyboard focus management, screen-reader labels and mobile-first layouts.</li>
+              </ul>
+            </div>
+          </li>
+          <li class="tl-item">
+            <div class="tl-when">Part-time · Remote</div>
+            <div class="tl-card">
+              <h3>Freelance AI Automation Developer <span>— Upwork</span></h3>
+              <ul>
+                <li>Builds n8n workflows that connect forms, spreadsheets, CRMs and email for clients.</li>
+                <li>Develops LLM-powered agents, chatbots, Python scripts and API integrations.</li>
+                <li>Built an AI Lead Qualification &amp; CRM Automation system as a client-style portfolio project.</li>
+              </ul>
+            </div>
+          </li>
+          <li class="tl-item">
+            <div class="tl-when">Research</div>
+            <div class="tl-card">
+              <h3>Co-author <span>— Dawood University</span></h3>
+              <p>Manuscript on drinking-water pollution in Sindh and Sukkur.</p>
+            </div>
+          </li>
+          <li class="tl-item">
+            <div class="tl-when">2025 – 2029</div>
+            <div class="tl-card">
+              <h3>BS Artificial Intelligence <span>— Dawood University of Engineering and Technology</span></h3>
+              <p>Expected graduation 2029.</p>
+            </div>
+          </li>
+        </ol>
       </div>
     </section>
 
     <!-- ABOUT -->
     <section id="about" class="section">
-      <div class="container panel about">
-        <div class="sticker-card" aria-hidden="true">
-          <span>Focus</span><span>Discipline</span><span>Consistency</span>
-        </div>
+      <div class="container about">
         <div>
-          <h2 class="section-title">About Me</h2>
-          <p>I'm a passionate web developer who loves turning ideas into playful, usable products. I care about semantic HTML, maintainable CSS and clean JavaScript &mdash; and I never stop learning new tools.</p>
-          <ul class="stats">
-            <li><strong>4+</strong><span>Projects</span></li>
-            <li><strong>1+</strong><span>Years learning</span></li>
-            <li><strong>100%</strong><span>Dedication</span></li>
-          </ul>
+          <p class="eyebrow"><span>04</span> About me</p>
+          <h2 class="section-title">I take repetitive work <em>off people's plates.</em></h2>
+        </div>
+        <div class="about-body">
+          <p>I'm an AI developer who builds automations, LLM-powered agents and full-stack web apps. I've shipped multi-agent platforms, offline local-LLM assistants and developer tools through competitive hackathons.</p>
+          <p>I work in n8n, Python and TypeScript, scope work clearly up front and deliver a working version early — then iterate with you.</p>
+          <dl class="facts">
+            <div><dt>Based in</dt><dd>Sukkur, Sindh, Pakistan (UTC+5)</dd></div>
+            <div><dt>Studying</dt><dd>BS Artificial Intelligence</dd></div>
+            <div><dt>Languages</dt><dd>English, Urdu, Sindhi, Hindi</dd></div>
+            <div><dt>Open to</dt><dd>Freelance &amp; internships</dd></div>
+          </dl>
         </div>
       </div>
     </section>
 
     <!-- CONTACT -->
     <section id="contact" class="section">
-      <div class="container panel contact">
+      <div class="container contact">
         <div class="contact-copy">
-          <h2 class="big-cta">Let's make something <span class="circled">dope!</span></h2>
-          <ul class="socials">
-            <li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></li>
-            <li><a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li>
-            <li><a href="mailto:you@example.com">Email</a></li>
+          <p class="eyebrow"><span>05</span> Contact</p>
+          <h2 class="big-cta">Got a workflow that eats your week? <em>Let's automate it.</em></h2>
+          <p class="muted">Tell me what you're working on — I usually reply within a day.</p>
+          <ul class="socials" id="socials">
+            <li><a href="assets/Peer_Shah_Resume.pdf" download><span aria-hidden="true">↓</span> Résumé (PDF)</a></li>
           </ul>
         </div>
-        <form id="contact-form" novalidate>
-          <label>Name <input type="text" id="c-name" required /></label>
-          <label>Email <input type="email" id="c-email" required /></label>
-          <label>Message <textarea id="c-msg" rows="4" required></textarea></label>
-          <p id="form-status" role="status"></p>
-          <button type="submit" class="btn btn-lime">Send Message</button>
+        <form id="contact-form" class="contact-form" novalidate>
+          <label>Name <input type="text" id="c-name" name="name" autocomplete="name" required /></label>
+          <label>Email <input type="email" id="c-email" name="email" autocomplete="email" required /></label>
+          <label>What do you need help with? <textarea id="c-msg" name="message" rows="5" maxlength="1000" required></textarea></label>
+          <p id="form-status" role="status" aria-live="polite"></p>
+          <button type="submit" class="btn btn-primary" id="send-btn">Send message <span aria-hidden="true">→</span></button>
         </form>
       </div>
     </section>
   </main>
 
-  <footer class="footer"><p>© <span id="year"></span> Your Name. Built for the Datheon Internship.</p></footer>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Peer Shah · Built for the Datheon Internship</p>
+      <a href="#home" class="link-arrow">Back to top <span aria-hidden="true">↑</span></a>
+    </div>
+  </footer>
 
+  <button id="to-top" class="to-top" type="button" aria-label="Back to top" hidden>↑</button>
+
+  <!-- PROJECT MODAL -->
   <div class="modal" id="modal" hidden>
-    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
-      <h3 id="modal-title"></h3>
-      <p id="modal-desc"></p>
-      <div class="tags" id="modal-tags"></div>
-      <div class="modal-links" id="modal-links"></div>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc">
+      <button class="modal-close" id="modal-close" type="button" aria-label="Close project details">✕</button>
+      <div id="modal-cover" class="modal-cover"></div>
+      <div class="modal-body">
+        <p class="modal-meta" id="modal-meta"></p>
+        <h3 id="modal-title"></h3>
+        <p id="modal-desc"></p>
+        <ul class="modal-points" id="modal-points"></ul>
+        <ul class="chips" id="modal-tags"></ul>
+        <div class="modal-links" id="modal-links"></div>
+      </div>
     </div>
   </div>
 

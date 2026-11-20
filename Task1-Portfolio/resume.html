@@ -1,11 +1,165 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Resume</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E⚡%3C/text%3E%3C/svg%3E" />
-<style>body{font-family:Segoe UI,sans-serif;max-width:760px;margin:2rem auto;padding:0 1rem;line-height:1.6}h1{margin-bottom:0}h2{border-bottom:2px solid #4f46e5;padding-bottom:.2rem;margin-top:2rem}</style></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Résumé of Peer Shah – AI developer, AI automation, AI agents and full-stack web." />
+  <title>Peer Shah – Résumé</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 rx=%2724%27 fill=%27%23c6f432%27/%3E%3Ctext x=%2750%27 y=%2766%27 font-family=%27Arial%27 font-weight=%27700%27 font-size=%2744%27 text-anchor=%27middle%27 fill=%27%230d0f05%27%3EPS%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ink: #16161a; --muted: #55555f; --line: #e3e1d9; --accent: #3f6212; --chip: #c6f432; --page: #ffffff; --bg: #eeece6; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Geist", "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    .toolbar { position: sticky; top: 0; z-index: 5; display: flex; justify-content: center; gap: .6rem; flex-wrap: wrap; padding: .8rem 16px; background: rgba(238, 236, 230, .9); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+    .tb { display: inline-flex; align-items: center; gap: .4rem; min-height: 40px; padding: .45rem 1rem; border-radius: 999px; border: 1px solid #cfccc1; background: #fff; font: inherit; font-size: .9rem; font-weight: 600; cursor: pointer; text-decoration: none; }
+    .tb.primary { background: var(--chip); border-color: transparent; color: #0d0f05; }
+    .tb:hover { border-color: var(--ink); }
+    .tb:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .page { width: min(820px, 100% - 32px); margin: 2rem auto 3rem; background: var(--page); border-radius: 18px; box-shadow: 0 30px 60px -30px rgba(40, 40, 20, .35); padding: clamp(1.5rem, 5vw, 3.2rem); }
+    header.top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap; padding-bottom: 1.3rem; border-bottom: 2px solid var(--ink); }
+    h1 { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-size: clamp(2.4rem, 6vw, 3.2rem); line-height: 1; letter-spacing: -.01em; }
+    .role { font-weight: 600; margin-top: .45rem; font-size: 1rem; }
+    .contact { text-align: right; color: var(--muted); font-size: .88rem; line-height: 1.7; }
+    .mark { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 14px; background: var(--chip); color: #0d0f05; font-weight: 700; font-size: 1.1rem; margin-left: auto; margin-bottom: .5rem; }
+    section { padding-top: 1.3rem; }
+    h2 { display: flex; align-items: center; gap: .7rem; font-size: .78rem; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); margin-bottom: .7rem; }
+    h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+    p, li { font-size: .93rem; }
+    .summary { color: #33333a; }
+    .skills { display: grid; gap: .35rem; }
+    .skills li { list-style: none; }
+    .skills b { font-weight: 600; }
+    .job { margin-bottom: .9rem; break-inside: avoid; }
+    .job-head { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; align-items: baseline; }
+    .job h3 { font-size: 1rem; font-weight: 600; }
+    .job h3 span { font-weight: 400; color: var(--muted); }
+    .when { font-size: .82rem; color: var(--muted); white-space: nowrap; }
+    .job ul { margin: .35rem 0 0 1.1rem; display: grid; gap: .2rem; }
+    .job li::marker { color: var(--accent); }
+    .stack { font-size: .82rem; color: var(--muted); font-weight: 400; }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2rem; }
+    @media (max-width: 600px) {
+      .contact { text-align: left; }
+      .mark { margin-left: 0; }
+      .two { grid-template-columns: 1fr; }
+    }
+    @media print {
+      @page { size: A4; margin: 13mm 15mm; }
+      body { background: #fff; }
+      .toolbar { display: none; }
+      .page { width: auto; margin: 0; padding: 0; box-shadow: none; border-radius: 0; }
+      p, li { font-size: 9.6pt; }
+      h1 { font-size: 30pt; }
+      section { padding-top: 10pt; }
+      a { text-decoration: none; }
+    }
+  </style>
+</head>
 <body>
-<h1>Your Name</h1><p>Full Stack Web Developer · you@example.com · github.com/yourusername</p>
-<h2>Summary</h2><p>Motivated developer building responsive, accessible web apps with HTML, CSS and JavaScript.</p>
-<h2>Skills</h2><p>HTML5, CSS3, Tailwind, JavaScript (ES6+), React, Node.js, Git/GitHub, REST APIs.</p>
-<h2>Experience</h2><p><strong>Full Stack Web Development Intern — Datheon</strong><br>Built a portfolio, task manager, weather dashboard and e-commerce storefront.</p>
-<h2>Education</h2><p>Your degree / institution here.</p>
-</body></html>
+  <nav class="toolbar" aria-label="Résumé actions">
+    <a class="tb" href="index.html">← Back to portfolio</a>
+    <a class="tb primary" href="assets/Peer_Shah_Resume.pdf" download>↓ Download PDF</a>
+    <button class="tb" type="button" onclick="window.print()">Print</button>
+  </nav>
+
+  <main class="page">
+    <header class="top">
+      <div>
+        <h1>Peer Shah</h1>
+        <p class="role">AI Developer · AI Automation · AI Agents · Full-Stack Web</p>
+      </div>
+      <div class="contact">
+        <div class="mark" aria-hidden="true">PS</div>
+        Sukkur, Sindh, Pakistan (UTC+5)<br />
+        Freelance on Upwork
+        <!-- Add your contact details here, e.g.:
+             <br /><a href="mailto:you@example.com">you@example.com</a>
+             <br /><a href="https://linkedin.com/in/...">LinkedIn</a> · <a href="https://github.com/...">GitHub</a> -->
+      </div>
+    </header>
+
+    <section>
+      <h2>Summary</h2>
+      <p class="summary">AI developer and BS Artificial Intelligence student who builds automations, LLM-powered agents and full-stack web apps that take repetitive work off people's plates. Shipped multi-agent platforms, offline local-LLM assistants and developer tools through competitive hackathons. Works in n8n, Python and TypeScript, scopes work clearly up front and delivers a working version early.</p>
+    </section>
+
+    <section>
+      <h2>Skills</h2>
+      <ul class="skills">
+        <li><b>AI &amp; agents:</b> LLM APIs, AI agent development, agentic workflows, multi-agent systems, RAG (Chroma, embeddings), prompt engineering, chatbots, local LLMs (llama.cpp, whisper.cpp, Piper TTS)</li>
+        <li><b>Automation:</b> n8n workflows, API integration, CRM/email/spreadsheet automation, data handling and report automation</li>
+        <li><b>Languages:</b> Python, TypeScript, JavaScript, SQL</li>
+        <li><b>Web &amp; backend:</b> React, Vite, Node.js, Express, FastAPI, Flask, REST/OpenAPI (Orval, Zod), HTML5, CSS3</li>
+        <li><b>Data &amp; DevOps:</b> PostgreSQL, Drizzle ORM, pnpm monorepos, Git, Render and Replit deployment</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Experience</h2>
+      <div class="job">
+        <div class="job-head"><h3>Full Stack Web Developer Intern <span>— Datheon</span></h3><span class="when">Current</span></div>
+        <ul>
+          <li>Built four responsive web apps in vanilla HTML, CSS and JavaScript: a developer portfolio, a CRUD task manager, a REST-API weather dashboard and an e-commerce store.</li>
+          <li>Implemented localStorage persistence, async API calls with timeouts and fallbacks, cart/tax/shipping logic and a validated checkout flow.</li>
+          <li>Focused on accessibility: keyboard focus management, screen-reader labels and mobile-first layouts.</li>
+        </ul>
+      </div>
+      <div class="job">
+        <div class="job-head"><h3>Freelance AI Automation Developer <span>— Upwork</span></h3><span class="when">Remote · Part-time</span></div>
+        <ul>
+          <li>Builds n8n workflows that connect forms, spreadsheets, CRMs and email for clients.</li>
+          <li>Develops LLM-powered agents, chatbots, Python scripts and API integrations.</li>
+          <li>Built an AI Lead Qualification &amp; CRM Automation system as a client-style portfolio project.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Projects &amp; Hackathons</h2>
+      <div class="job">
+        <div class="job-head"><h3>HOPIRIT — AI Disaster Coordination Platform</h3><span class="stack">React, TypeScript, Node.js, PostgreSQL</span></div>
+        <ul>
+          <li>Citizen reporting portal plus an operator command center with Leaflet.js heatmaps and hazard zones.</li>
+          <li>Three always-on AI agents (Triage, Verification, Silent Zone) that sort, verify and flag incoming reports.</li>
+          <li>pnpm monorepo with Express, Drizzle ORM and an OpenAPI-driven pipeline (Orval, Zod); deployed on Render.</li>
+        </ul>
+      </div>
+      <div class="job">
+        <div class="job-head"><h3>CodeMate — Offline Voice Coding Assistant</h3><span class="stack">Africa Deep Tech Challenge (Laptop LLM)</span></div>
+        <ul>
+          <li>Fully offline agentic coding assistant built to run on an 8 GB RAM, no-GPU laptop.</li>
+          <li>FastAPI agent loop with Qwen2.5-Coder 1.5B (llama.cpp), whisper.cpp speech-to-text, Piper TTS and Chroma RAG.</li>
+        </ul>
+      </div>
+      <div class="job">
+        <div class="job-head"><h3>Wingman — CLI AI Coding Companion</h3><span class="stack">OpenAI Build Week</span></div>
+        <ul><li>Node.js/TypeScript command-line assistant distributed via npx for daily developer use.</li></ul>
+      </div>
+      <div class="job">
+        <div class="job-head"><h3>AI Control Plane</h3><span class="stack">Galuxium Nexus V2 SaaS Hackathon</span></div>
+        <ul><li>AI gateway combining guardrails, a smart multi-model LLM router, usage billing and governance.</li></ul>
+      </div>
+      <div class="job">
+        <div class="job-head"><h3>FormSaathi</h3><span class="stack">Kiroween 2026</span></div>
+        <ul><li>Evidence-backed application navigator that maps form requirements to supporting documents for public services.</li></ul>
+      </div>
+      <p><b>Research:</b> Co-author, manuscript on drinking-water pollution in Sindh and Sukkur (Dawood University).</p>
+    </section>
+
+    <div class="two">
+      <section>
+        <h2>Education</h2>
+        <p><b>BS Artificial Intelligence</b><br />Dawood University of Engineering and Technology<br /><span class="when">2025 – 2029 (expected)</span></p>
+      </section>
+      <section>
+        <h2>Languages</h2>
+        <p>English, Urdu, Sindhi, Hindi — all fluent</p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
