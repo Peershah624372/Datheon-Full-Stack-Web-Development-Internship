@@ -12,7 +12,7 @@ Four web projects built by **Peer Shah** for the Datheon Full Stack Web Developm
 | Task 3 – Weather App | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/Task3-Weather-App/) |
 | Task 4 – E-Commerce Store | [Open](https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/Task4-E-Commerce/) |
 
-Hosted on GitHub Pages.
+Also deployed on Vercel, where the weather app uses OpenWeatherMap through the `api/owm.js` proxy: **[datheon-internship-sigma.vercel.app](https://datheon-internship-sigma.vercel.app/)**. The GitHub Pages site above uses the keyless Open-Meteo fallback for weather.
 
 ## Projects
 
@@ -79,11 +79,17 @@ Use a local server rather than opening the files directly: browsers block some `
 2. **Settings → Pages → Build and deployment → Deploy from a branch**, branch `main`, folder `/ (root)`, then **Save**.
 3. After a minute the site is live at `https://peershah624372.github.io/Datheon-Full-Stack-Web-Development-Internship/`.
 
+## Deploy (Vercel, optional)
+
+1. Import the repo at vercel.com (**Add New → Project**), Framework Preset **Other**, leave the build settings empty.
+2. Add the environment variable `OWM_KEY` with your OpenWeatherMap key, then deploy (redeploy if you add it afterwards).
+3. Vercel serves the static files and runs `api/owm.js` as a serverless function. Check it at `/api/owm?path=weather&q=London`.
+
 ## Weather API key
 
 The OpenWeatherMap key is **never stored in this repository**:
 - **Local development:** `Task3-Weather-App/config.js` (git-ignored), created from `config.example.js`.
-- **Server hosting (optional):** `api/owm.js` can run as a serverless function with the key in an `OWM_KEY` environment variable. The browser calls `/api/owm` and the key stays on the server, so visitors can't see it.
+- **Vercel (live):** `api/owm.js` runs as a serverless function with the key in an `OWM_KEY` environment variable. The browser calls `/api/owm` and the key stays on the server, so visitors can't see it.
 - **No key available** (the GitHub Pages site or a fresh clone): the app automatically uses [Open-Meteo](https://open-meteo.com/), which needs no key. The footer shows which service supplied the data.
 
 ## Notes
